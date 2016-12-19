@@ -4,10 +4,11 @@
 ## Made by Sofiane Belazouz
 ## 
 ## Started on  Fri Dec 16 19:35:10 2016 Sofiane Belazouz
-## Last update Mon Dec 19 18:28:08 2016 Sofiane Belazouz
+## Last update Mon Dec 19 19:26:10 2016 Sofiane Belazouz
 ##
 
-SRC = main.c
+SRC = main.c\
+	options.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -4,7 +4,7 @@
 ** Made by Sofiane Belazouz
 ** 
 ** Started on  Fri Dec 16 19:31:48 2016 Sofiane Belazouz
-** Last update Mon Dec 19 19:20:28 2016 Sofiane Belazouz
+** Last update Mon Dec 19 19:59:11 2016 Sofiane Belazouz
 */
 
 #include "ft_ls.h"
@@ -12,19 +12,26 @@
 static void	ft_ls(t_ls *dc)
 {
   int		hide;
+  int		f;
 
-  hide = 10;
-  dc->ent = readdir(dc->dir);
-  while (dc->ent)
+  f = 0;
+  hide = 0;
+  if ((dc->file = malloc(sizeof(t_file))) == NULL)
+    return ;
+  dc->file->ent = readdir(dc->dir);
+  while (dc->file->ent)
     {
-      hide = 0;
-      if (dc->ent->d_name[0] != '.')
-	  ft_putstr(dc->ent->d_name);
-      if ((dc->ent = readdir(dc->dir)) == NULL)
+      hide = 1;
+      if (dc->file->ent->d_name[0] != '.')
+	{
+	  ft_putstr(dc->file->ent->d_name);
+	  f = 1;
+	}
+      if ((dc->file->ent = readdir(dc->dir)) == NULL)
 	ft_putchar('\n');
-      if (dc->ent->d_name[0] == '.')
-	hide = 1;
-      if (!hide && dc->ent != NULL)
+      else if (dc->file->ent->d_name[0] == '.')
+	hide = 0;
+      if (hide && dc->file->ent != NULL && f)
 	ft_putchar(' ');
     }
 }
@@ -55,10 +62,7 @@ int		main(int ac, char **av)
 	ft_ls(dir_content);
     }
   else
-    puts(av[1]);
-    //ft_ls_wo(ac, av);
-    /*if ((dir = opendir(av[1])) == NULL)
-      perror(ft_strcat(bin, av[1]));*/
+    opt(dir_content, av);
   closedir(dir_content->dir);
   free(dir_content->bin);
   free(dir_content);
