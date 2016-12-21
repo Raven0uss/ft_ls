@@ -5,7 +5,7 @@
 ** Login   <belazo_s@epitech.net>
 ** 
 ** Started on  Mon Dec 19 19:23:42 2016 Sofiane Belazouz
-** Last update Mon Dec 19 20:31:14 2016 Sofiane Belazouz
+** Last update Mon Dec 19 22:18:22 2016 Sofiane Belazouz
 */
 
 #include "ft_ls.h"
@@ -31,7 +31,13 @@ void	opt(t_ls *dc, char **av)
       if (checker_av(av[i]))
 	ft_putstr(av[i]);
       else
-	(void)i;
+	{
+	  if ((dc->dir = opendir(av[i])) == NULL)
+	    {
+	      perror(ft_strjoin(dc->bin, av[i]));
+	      return ;
+	    }
+	}
       i++;
     }
   if (av[i])
