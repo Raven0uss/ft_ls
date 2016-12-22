@@ -23,6 +23,7 @@
 typedef	struct		s_file
 {
 	struct dirent	*ent;
+	char		**tab;
 	struct s_file	*next;
 }					t_file;
 

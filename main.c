@@ -1,81 +1,56 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/20 20:55:56 by sbelazou          #+#    #+#             */
-/*   Updated: 2016/12/20 21:08:52 by sbelazou         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*
+** main.c for  in /home/ravenous/42/ft_ls
+** 
+** Made by Sofiane Belazouz
+** 
+** Started on  Fri Dec 16 19:31:48 2016 Sofiane Belazouz
+** Last update Thu Dec 22 13:25:46 2016 Sofiane Belazouz
+*/
 
 #include "ft_ls.h"
 
 static void	ft_ls(t_ls *dc)
 {
   int		hide;
-  int		f;
+  int		i;
 
-  f = 0;
-  hide = 0;
+  i = 0;
   if ((dc->file = malloc(sizeof(t_file))) == NULL)
     return ;
-  dc->file->ent = readdir(dc->dir);
-  while (dc->file->ent)
-    {
-      hide = 1;
-      if (dc->file->ent->d_name[0] != '.')
-	{
-	  ft_putstr(dc->file->ent->d_name);
-	  f = 1;
-	}
-      if ((dc->file->ent = readdir(dc->dir)) == NULL)
-	ft_putchar('\n');
-      else if (dc->file->ent->d_name[0] == '.')
-	hide = 0;
-      if (hide && dc->file->ent != NULL && f)
-	ft_putchar(' ');
-    }
+  if ((dc->file->tab = malloc(sizeof(char *) * 1024)) == NULL)
+    return ;
+  while ((dc->file->ent = readdir(dc->dir)))
+    if (dc->file->ent->d_name[0] != '.')
+      dc->file->tab[i++] = ft_strdup(dc->file->ent->d_name);
+  ft_aff_tab(ft_sort_tab(dc->file->tab, i - 1), "  ");
 }
 
-static char *crt_bname(char *name)
+static char	*crt_bname(char *name)
 {
   char		*bin;
-
+  
   if ((bin = ft_strdup(name)) == NULL)
     return (NULL);
   if ((bin = ft_strjoin(name, ": ")) == NULL)
     return (NULL);
-  return (bin);
 }
 
 int		main(int ac, char **av)
 {
-	t_ls		*dir_content;
+  t_ls		*dir_content;
 
-	if ((dir_content = malloc(sizeof(t_ls))) == NULL)
-		return (-1);
-	if ((dir_content->bin = crt_bname(av[0])) == NULL)
-		return (-1);
-	dir_content->dir = NULL;
-	if (ac == 1)
-    {
-		if ((dir_content->dir = opendir(".")) == NULL)
-			perror(dir_content->bin);
-		else
-			ft_ls(dir_content);
-    }
-	else
-	{
-		if ((dir_content->reps = malloc(sizeof(char *) * ac)) == NULL)
-			return (-1);
-		opt(dir_content, av);
-		free(dir_content->reps);
-	}
-	if (dir_content->dir)
-		closedir(dir_content->dir);
-	free(dir_content->bin);
-	free(dir_content);
-	return (0);
+  if ((dir_content = malloc(sizeof(t_ls))) == NULL)
+    return (-1);
+  if ((dir_content->bin = crt_bname(av[0])) == NULL)
+    return (-1);
+  if ((dir_content->dir = opendir(".")) == NULL)
+    perror(dir_content->bin);
+  if (ac == 1)
+    ft_ls(dir_content);
+  else
+    opt(dir_content, av);
+  closedir(dir_content->dir);
+  free(dir_content->bin);
+  free(dir_content);
+  return (0);
 }
