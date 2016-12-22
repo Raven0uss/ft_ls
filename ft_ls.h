@@ -1,14 +1,17 @@
-/*
-** ft_ls.h for  in /home/ravenous/42/ft_ls
-** 
-** Made by Sofiane Belazouz
-** 
-** Started on  Fri Dec 16 20:43:08 2016 Sofiane Belazouz
-** Last update Mon Dec 19 20:29:50 2016 Sofiane Belazouz
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/20 20:55:47 by sbelazou          #+#    #+#             */
+/*   Updated: 2016/12/20 21:09:09 by sbelazou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef FT_LS
-# define FT_LS
+#ifndef FT_LS_H
+# define FT_LS_H
 
 # define OPTS ((char const*[]){"-l", "-R", "-a", "-r", "-t"})
 # define OPT_NB 5
@@ -19,18 +22,34 @@
 
 typedef	struct		s_file
 {
-  struct dirent		*ent;
-  char			*sep;
-  struct s_file		*next;
-}			t_file;
+	struct dirent	*ent;
+	struct s_file	*next;
+}					t_file;
 
 typedef struct		s_ls
 {
-  DIR			*dir;
-  struct s_file		*file;
-  char			*bin;
-}			t_ls;
+	DIR				*dir;
+	struct s_file	*file;
+	char			*bin;
+	char			l_args[OPT_NB];
+	char			**reps;
+}					t_ls;
 
-void			opt(t_ls *dc, char **arg);
+void				opt(t_ls *dc, char **arg);
 
-#endif /* FT_LS */
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
