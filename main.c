@@ -4,12 +4,12 @@
 ** Made by Sofiane Belazouz
 ** 
 ** Started on  Fri Dec 16 19:31:48 2016 Sofiane Belazouz
-** Last update Thu Dec 22 13:25:46 2016 Sofiane Belazouz
+** Last update Fri Dec 23 17:55:51 2016 Sofiane Belazouz
 */
 
 #include "ft_ls.h"
 
-static void	ft_ls(t_ls *dc)
+void	ft_ls(t_ls *dc)
 {
   int		hide;
   int		i;
@@ -48,8 +48,9 @@ int		main(int ac, char **av)
   if (ac == 1)
     ft_ls(dir_content);
   else
-    opt(dir_content, av);
-  closedir(dir_content->dir);
+    opt(dir_content, av, ac);
+  if (ac == 1)
+    closedir(dir_content->dir);
   free(dir_content->bin);
   free(dir_content);
   return (0);

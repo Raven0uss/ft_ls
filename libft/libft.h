@@ -99,5 +99,7 @@ int						ft_isblank(int c);
 char						**ft_sort_tab(char **tab, int size);
 void						ft_aff_tab(char **tab, char *sep);
 int						ft_strcmp_case(const char *s1, const char *s2);
+char						*ft_onlyone(char *str);
+int						ft_sizetab(char **tab);
 
 #endif

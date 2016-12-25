@@ -12,32 +12,105 @@
 
 #include "ft_ls.h"
 
-static int	checker_av(char *str)
+static char	*checker_av(char *str, char *args)
 {
-	int		i;
+  int		i;
+  int		j;
+  int		k;
 
-	i = 0;
-	while (i != OPT_NB)
-		if (ft_strcmp(str, OPTS[i++]) == 0)
-			return (1);
-	return (0);
+  k = 0;
+  i = 1;
+  j = 0;
+  if (args != NULL)
+    k = ft_strlen(args);
+  while (str[i])
+    {  
+      while (OPTS[j])
+	if (str[i] == OPTS[j++])
+	  {
+	    args[k++] = str[i++];
+	    j = 0;
+	    break ;
+	  }
+      if (j != 0)
+	exit(1); //message error to fix
+    }
+  return (args);
 }
 
-void	opt(t_ls *dc, char **av)
+static void	ft_ls_opt(t_ls *dc)
 {
-	int	i;
-	int	j;
-	int	k;
+  int		i;
+  int		j;
 
-	i = 1;
-	j = 0;
-	k = 0;
-	while (av[i])
+  j = 0;
+  if (dc->reps == NULL)
     {
-		if (checker_av(av[i]))
-			dc->l_args[j++] = av[i][1];
-		else
-			dc->reps[k++] = ft_strdup(av[i]);
-		i++;
+      dc->dir = opendir(".");
+      ft_ls(dc);
+      closedir(dc->dir);
     }
+  else
+    {
+      i = ft_sizetab(dc->reps) - 1;
+      closedir(dc->dir);
+      if ((dc->file = malloc(sizeof(t_file))) == NULL)
+	return ;
+      if ((dc->file->tab = malloc(sizeof(char *) * 1024)) == NULL)
+	return ;
+      while (i > -1)
+	{
+	  if ((dc->dir = opendir(dc->reps[i])) == NULL)
+	    {
+	      ft_putstr(dc->bin);
+	      perror(dc->reps[i]);
+	    }
+	  else
+	    {
+	      j = 0;
+	      if (ft_sizetab(dc->reps) != 1)
+		{
+		  ft_putstr(dc->reps[i]);
+		  ft_putendl(":");
+		}
+	      ft_ls(dc);
+	      while ((dc->file->ent = readdir(dc->dir)))
+		dc->file->tab[j++] = ft_strdup(dc->file->ent->d_name);
+	      dc->file->tab[j] = NULL;
+	      ft_aff_tab(ft_sort_tab(dc->file->tab, j - 1), "  ");
+	      closedir(dc->dir);
+	    }
+	  i--;
+	  if (i != -1 && j != 0)
+	    ft_putchar('\n');
+	}
+    }
+}
+
+void	opt(t_ls *dc, char **av, int ac)
+{
+  int	i;
+  int	k;
+
+  i = 1;
+  k = 0;
+  if ((dc->reps = malloc(sizeof(char *) * ac)) == NULL)
+    return ;
+  if ((dc->l_args = malloc(sizeof(char *) * ac)) == NULL)
+    return ;
+  while (av[i])
+    {
+      if (av[i][0] == '-')
+	dc->l_args = checker_av(av[i], dc->l_args);
+      else
+	dc->reps[k++] = ft_strdup(av[i]);
+      i++;
+    }
+  if (k == 0)
+    dc->reps = NULL;
+  if (dc->l_args == NULL)
+    return ;
+  dc->l_args = ft_onlyone(dc->l_args);
+  ft_putendl(dc->l_args);
+  ft_ls_opt(dc);
 }
