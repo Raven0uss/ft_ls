@@ -1,11 +1,14 @@
-/*
-** main.c for  in /home/ravenous/42/ft_ls
-** 
-** Made by Sofiane Belazouz
-** 
-** Started on  Fri Dec 16 19:31:48 2016 Sofiane Belazouz
-** Last update Fri Dec 23 17:55:51 2016 Sofiane Belazouz
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/12/25 15:33:33 by sbelazou          #+#    #+#             */
+/*   Updated: 2016/12/25 15:33:42 by sbelazou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_ls.h"
 
@@ -28,11 +31,12 @@ void	ft_ls(t_ls *dc)
 static char	*crt_bname(char *name)
 {
   char		*bin;
-  
+
   if ((bin = ft_strdup(name)) == NULL)
     return (NULL);
   if ((bin = ft_strjoin(name, ": ")) == NULL)
     return (NULL);
+  return (bin);
 }
 
 int		main(int ac, char **av)

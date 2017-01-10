@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 18:32:20 by sbelazou          #+#    #+#             */
-/*   Updated: 2016/11/10 16:34:06 by sbelazou         ###   ########.fr       */
+/*   Updated: 2016/12/25 15:39:28 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_sort_tab(char **tab, int size)
   i = 0;
   while (i < size)
     {
-      if (ft_strcmp_case(tab[i], tab[i + 1]) > 0)
+      if (ft_strcmp(tab[i], tab[i + 1]) > 0)
 	{
 	  tmp = tab[i];
 	  tab[i] = tab[i + 1];
