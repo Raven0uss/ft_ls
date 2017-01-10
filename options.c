@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 20:56:04 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/01/10 17:19:38 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/01/10 17:53:15 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ static void	ft_ls_opt(t_ls *dc)
     }
 	else
     {
-		dc->reps = ft_sort_tab(dc->reps, ft_sizetab(dc->reps) - 1);
+		if (ft_strchr(dc->l_args, 'r'))
+			dc->reps = ft_rev_tab(dc->reps, ft_sizetab(dc->reps) - 1);
+		else
+			dc->reps = ft_sort_tab(dc->reps, ft_sizetab(dc->reps) - 1);
 		closedir(dc->dir);
 		if ((dc->file = malloc(sizeof(t_file))) == NULL)
 			return ;
@@ -62,7 +65,6 @@ static void	ft_ls_opt(t_ls *dc)
 			return ;
 		while (dc->reps[i])
 		{
-
 			if ((dc->dir = opendir(dc->reps[i])) == NULL)
 			{
 				ft_putstr(dc->bin);
@@ -80,7 +82,10 @@ static void	ft_ls_opt(t_ls *dc)
 				while ((dc->file->ent = readdir(dc->dir)))
 					dc->file->tab[j++] = ft_strdup(dc->file->ent->d_name);
 				dc->file->tab[j] = NULL;
-				ft_aff_tab(ft_sort_tab(dc->file->tab, j - 1), "  ");
+				if (ft_strchr(dc->l_args, 'r'))
+					ft_aff_tab(ft_rev_tab(dc->file->tab, j - 1), "  ");
+				else
+					ft_aff_tab(ft_sort_tab(dc->file->tab, j - 1), "  ");
 				closedir(dc->dir);
 			}
 			if (dc->reps[++i])

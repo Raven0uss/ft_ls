@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 20:55:47 by sbelazou          #+#    #+#             */
-/*   Updated: 2016/12/20 21:09:09 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/01/10 19:00:04 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "libft/libft.h"
 # include <dirent.h>
 # include <errno.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 typedef	struct		s_file
 {
