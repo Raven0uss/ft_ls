@@ -154,6 +154,65 @@ char	*path(char *rep, char *name)
   return (new);
 }
 
+static int	size_tab(char **tab)
+{
+  int		i;
+
+  i = 0;
+  while (tab[i])
+    i++;
+  return (i);
+}
+
+static char	**add_to_tab(char **tab, int i, char *str)
+{
+  char		**tmp;
+  int		j;
+
+  j = 0;
+  if ((tmp = malloc(sizeof(char *) * size_tab(tab) + 2)) == NULL)
+    return (NULL);
+  while (j != i)
+    tmp[j] = ft_strdup(tab[j++]);
+  tmp[j++] = ft_strdup(str);
+  while (tab[i])
+    tmp[j] = ft_strdup(tab[i++]);
+  tmp[j] = 0;
+  return (tmp);
+}
+
+static char	**add_to_reps(t_ls *dc, char *str, char *rep)
+{
+  int	i;
+
+  i = 0;
+  if (dc->reps[0] == 0)
+    dc->reps[0] = ft_strdup(str);
+  else
+    {
+      while (dc->reps[i] && ft_strcmp(dc->reps[i], rep) != 0)
+	i++;
+      dc->reps = add_to_tab(dc->reps, i + 1, (ft_strcmp(rep, ".") != 0) ?
+			    path(rep, str) : str);
+    }
+  return (dc->reps);
+}
+
+static char	**detect_directory(t_ls *dc, char *rep)
+{
+  int		i;
+
+  i = 0;
+  while (dc->file->tab[i])
+    {
+      stat(path(rep, dc->file->tab[i]), &dc->file->s);
+      if (S_ISDIR(dc->file->s.st_mode))
+	dc->reps = add_to_reps(dc, dc->file->tab[i], rep);
+      i++;
+    }
+  return (dc->reps);
+}
+
 void	ft_ls(t_ls *dc, char *rep)
 {
 	int		i;
@@ -185,6 +244,8 @@ void	ft_ls(t_ls *dc, char *rep)
 		else
 			dc->file->tab = ft_sort_tab(dc->file->tab, i - 1);
 	}
+	if (ft_strchr(dc->l_args, 'R'))
+	  dc->reps = detect_directory(dc, rep);
 	if (ft_strchr(dc->l_args, 'l'))
 	{
 		ft_putstr("total ");

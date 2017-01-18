@@ -52,7 +52,7 @@ static void	ft_ls_opt(t_ls *dc)
 		ft_ls(dc, NULL);
 		closedir(dc->dir);
     }
-	else
+	if (dc->reps[0] != 0)
     {
 		if (ft_strchr(dc->l_args, 'r'))
 			dc->reps = ft_rev_tab(dc->reps, ft_sizetab(dc->reps) - 1);
@@ -89,7 +89,7 @@ void	opt(t_ls *dc, char **av, int ac)
 
 	i = 1;
 	k = 0;
-	if ((dc->reps = malloc(sizeof(char *) * ac)) == NULL)
+	if ((dc->reps = malloc(sizeof(char *) * 1024)) == NULL)
 		return ;
 	dc->l_args = ft_memalloc(1024);
 	while (av[i])
