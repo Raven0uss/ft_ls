@@ -49,7 +49,7 @@ static void	ft_ls_opt(t_ls *dc)
 	if (dc->reps[0] == 0)
     {
 		dc->dir = opendir(".");
-		ft_ls(dc);
+		ft_ls(dc, 0);
 		closedir(dc->dir);
     }
 	else
@@ -73,7 +73,7 @@ static void	ft_ls_opt(t_ls *dc)
 					ft_putstr(dc->reps[i]);
 					ft_putendl(":");
 				}
-				ft_ls(dc);
+				ft_ls(dc, dc->reps[i]);
 				closedir(dc->dir);
 			}
 			if (dc->reps[++i])

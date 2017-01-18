@@ -40,7 +40,7 @@ typedef struct		s_ls
 }					t_ls;
 
 void				opt(t_ls *dc, char **arg, int ac);
-void				ft_ls(t_ls *dc);
+void				ft_ls(t_ls *dc, char *rep);
 
 #endif
 

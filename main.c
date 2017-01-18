@@ -71,6 +71,8 @@ static char **ft_revtime(t_ls *dc, int size)
 	return (dc->file->tab);
 }
 
+//  BUG NIVEAU DU TEMPS. LE CHEMIN SPECIFIE EST SUREMENT INCOMPLET POUR UN REPO AUTRE QUE LE REPO COURANT
+
 static char **ft_sortime(t_ls *dc, int size)
 {
 	int		i;
@@ -99,7 +101,30 @@ static char **ft_sortime(t_ls *dc, int size)
 	return (dc->file->tab);
 }
 
-void	ft_ls(t_ls *dc)
+char	*path(char *rep, char *name)
+{
+  int	i;
+  int	j;
+  char	*new;
+
+  i = 0;
+  j = 0;
+  if (rep == NULL)
+    return (name);
+  if ((new = malloc(sizeof(char) * ft_strlen(name) * ft_strlen(rep))) == NULL)
+    return (NULL);
+  while (rep[i])
+    new[i++] = rep[i++];
+  j = i;
+  i = 0;
+  new[j++] = '/';
+  while (name[i])
+    new[j++] = name[i++];
+  new[j] = 0;
+  return (new);
+}
+
+void	ft_ls(t_ls *dc, char *rep)
 {
 	int		i;
 	char	*sep;
@@ -136,7 +161,7 @@ void	ft_ls(t_ls *dc)
 		ft_putendl("total ?");
 		while (dc->file->tab[i])
 		{
-			stat(dc->file->tab[i], &(dc->file->s));
+		  stat(dc->file->tab[i], &(dc->file->s)); //path missing
 			aff_stat(dc);
 			ft_putendl(dc->file->tab[i++]);
 		}
@@ -168,12 +193,7 @@ int		main(int ac, char **av)
     return (-1);
   if ((dir_content->dir = opendir(".")) == NULL)
     perror(dir_content->bin);
-  if (ac == 1)
-    ft_ls(dir_content);
-  else
-    opt(dir_content, av, ac);
-  if (ac == 1)
-    closedir(dir_content->dir);
+  opt(dir_content, av, ac);
   free(dir_content->bin);
   free(dir_content);
   return (0);
