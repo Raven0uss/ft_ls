@@ -22,6 +22,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <time.h>
+# include <grp.h>
+# include <pwd.h>
 
 typedef	struct		s_file
 {
@@ -41,6 +43,7 @@ typedef struct		s_ls
 
 void				opt(t_ls *dc, char **arg, int ac);
 void				ft_ls(t_ls *dc, char *rep);
+char				*path(char *rep, char *name);
 
 #endif
 

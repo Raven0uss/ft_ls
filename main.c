@@ -12,6 +12,25 @@
 
 #include "ft_ls.h"
 
+static void aff_perm(mode_t m)
+{
+  if (S_ISDIR(m))
+    ft_putchar('d');
+  else if (S_ISLNK(m))
+    ft_putchar('l');
+  else
+    ft_putchar('-');
+  ft_putchar((m & S_IRUSR) ? 'r' : '-');
+  ft_putchar((m & S_IWUSR) ? 'w' : '-');
+  ft_putchar((m & S_IXUSR) ? 'x' : '-');
+  ft_putchar((m & S_IRGRP) ? 'r' : '-');
+  ft_putchar((m & S_IWGRP) ? 'w' : '-');
+  ft_putchar((m & S_IXGRP) ? 'x' : '-');
+  ft_putchar((m & S_IROTH) ? 'r' : '-');
+  ft_putchar((m & S_IWOTH) ? 'w' : '-');
+  ft_putchar((m & S_IXOTH) ? 'x' : '-');
+}
+
 static void data_padd(char *d)
 {
 	char	str[25];
@@ -27,15 +46,25 @@ static void data_padd(char *d)
 	ft_putstr(str);
 }
 
+static void	affgiduid(uid_t uid, gid_t gid)
+{
+  struct passwd	*pwd;
+  struct group	*grp;
+
+  pwd = getpwuid(uid);
+  grp = getgrgid(gid);
+  ft_putstr(pwd->pw_name);
+  ft_putstr(" ");
+  ft_putstr(grp->gr_name);
+}
+
 static void	aff_stat(t_ls *dc)
 {
-	ft_putnbr(dc->file->s.st_mode);
+	aff_perm(dc->file->s.st_mode);
 	ft_putstr(" ");
 	ft_putnbr(dc->file->s.st_nlink);
 	ft_putstr(" ");
-	ft_putnbr(dc->file->s.st_uid);
-	ft_putstr(" ");
-	ft_putnbr(dc->file->s.st_gid);
+	affgiduid(dc->file->s.st_uid, dc->file->s.st_gid);
 	ft_putstr(" ");
 	ft_putnbr(dc->file->s.st_size);
 	ft_putstr(" ");
@@ -43,7 +72,7 @@ static void	aff_stat(t_ls *dc)
 	ft_putstr(" ");
 }
 
-static char **ft_revtime(t_ls *dc, int size)
+static char **ft_revtime(t_ls *dc, int size, char *rep)
 {
 	int		i;
 	char	*tmp;
@@ -56,14 +85,14 @@ static char **ft_revtime(t_ls *dc, int size)
 	while (i < size)
 	{
 		timod = dc->file->s.st_mtime;
-		stat(dc->file->tab[i + 1], &(dc->file->s));
+		stat(path(rep, dc->file->tab[i + 1]), &(dc->file->s));
 		if (timod > dc->file->s.st_mtime)
 		{
 			tmp = dc->file->tab[i];
 			dc->file->tab[i] = dc->file->tab[i + 1];
 			dc->file->tab[i + 1] = tmp;
 			i = 0;
-			stat(dc->file->tab[i], &(dc->file->s));
+			stat(path(rep, dc->file->tab[i]), &(dc->file->s));
 		}
 		else
 			i++;
@@ -73,7 +102,7 @@ static char **ft_revtime(t_ls *dc, int size)
 
 //  BUG NIVEAU DU TEMPS. LE CHEMIN SPECIFIE EST SUREMENT INCOMPLET POUR UN REPO AUTRE QUE LE REPO COURANT
 
-static char **ft_sortime(t_ls *dc, int size)
+static char **ft_sortime(t_ls *dc, int size, char *rep)
 {
 	int		i;
 	char	*tmp;
@@ -82,18 +111,18 @@ static char **ft_sortime(t_ls *dc, int size)
 	i = 0;
 	timod = 0;
 	dc->file->tab = ft_sort_tab(dc->file->tab, size);
-	stat(dc->file->tab[i], &(dc->file->s));
+	stat(path(rep, dc->file->tab[i]), &(dc->file->s));
 	while (i < size)
 	{
 		timod = dc->file->s.st_mtime;
-		stat(dc->file->tab[i + 1], &(dc->file->s));
+		stat(path(rep, dc->file->tab[i + 1]), &(dc->file->s));
 		if (timod < dc->file->s.st_mtime)
 		{
 			tmp = dc->file->tab[i];
 			dc->file->tab[i] = dc->file->tab[i + 1];
 			dc->file->tab[i + 1] = tmp;
 			i = 0;
-			stat(dc->file->tab[i], &(dc->file->s));
+			stat(path(rep, dc->file->tab[i]), &(dc->file->s));
 		}
 		else
 			i++;
@@ -111,13 +140,14 @@ char	*path(char *rep, char *name)
   j = 0;
   if (rep == NULL)
     return (name);
-  if ((new = malloc(sizeof(char) * ft_strlen(name) * ft_strlen(rep))) == NULL)
+  if ((new = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(rep)))) == NULL)
     return (NULL);
   while (rep[i])
-    new[i++] = rep[i++];
+    new[i] = rep[i++];
   j = i;
   i = 0;
-  new[j++] = '/';
+  if (new[j - 1] != '/')
+    new[j++] = '/';
   while (name[i])
     new[j++] = name[i++];
   new[j] = 0;
@@ -144,9 +174,9 @@ void	ft_ls(t_ls *dc, char *rep)
 	if (ft_strchr(dc->l_args, 't'))
 	{
 		if (ft_strchr(dc->l_args, 'r'))
-			dc->file->tab = ft_revtime(dc, i - 1);
+		  dc->file->tab = ft_revtime(dc, i - 1, rep);
 		else
-			dc->file->tab = ft_sortime(dc, i - 1);
+		  dc->file->tab = ft_sortime(dc, i - 1, rep);
 	}
 	else
 	{
@@ -155,13 +185,15 @@ void	ft_ls(t_ls *dc, char *rep)
 		else
 			dc->file->tab = ft_sort_tab(dc->file->tab, i - 1);
 	}
-	i = 0;
 	if (ft_strchr(dc->l_args, 'l'))
 	{
-		ft_putendl("total ?");
+		ft_putstr("total ");
+		ft_putnbr(i - 1);
+		write(1, "\n", 1);
+		i = 0;
 		while (dc->file->tab[i])
 		{
-		  stat(dc->file->tab[i], &(dc->file->s)); //path missing
+			stat(path(rep, dc->file->tab[i]), &(dc->file->s));
 			aff_stat(dc);
 			ft_putendl(dc->file->tab[i++]);
 		}
