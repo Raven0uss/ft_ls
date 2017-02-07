@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 20:56:04 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/01/11 15:56:47 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/07 20:02:58 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	opt(t_ls *dc, char **av, int ac)
 
 	i = 1;
 	k = 0;
-	if ((dc->reps = malloc(sizeof(char *) * 1024)) == NULL)
+	if ((dc->reps = malloc(sizeof(char *) * 10240)) == NULL)
 		return ;
 	dc->l_args = ft_memalloc(1024);
 	while (av[i])

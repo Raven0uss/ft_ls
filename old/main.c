@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/25 15:33:33 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/01/11 16:13:03 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/07 20:07:07 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,14 @@ char	*path(char *rep, char *name)
   int	j;
   char	*new;
 
-  i = 0;
+  i = -1;
   j = 0;
   if (rep == NULL)
     return (name);
-  if ((new = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(rep)))) == NULL)
+  if ((new = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(rep) * 200))) == NULL)
     return (NULL);
-  while (rep[i])
-    new[i] = rep[i++];
+  while (rep[++i])
+    new[i] = rep[i];
   j = i;
   i = 0;
   if (new[j - 1] != '/')
@@ -169,11 +169,11 @@ static char	**add_to_tab(char **tab, int i, char *str)
   char		**tmp;
   int		j;
 
-  j = 0;
+  j = -1;
   if ((tmp = malloc(sizeof(char *) * size_tab(tab) + 2)) == NULL)
     return (NULL);
-  while (j != i)
-    tmp[j] = ft_strdup(tab[j++]);
+  while (++j != i)
+    tmp[j] = ft_strdup(tab[j]);
   tmp[j++] = ft_strdup(str);
   while (tab[i])
     tmp[j] = ft_strdup(tab[i++]);
@@ -225,7 +225,7 @@ void	ft_ls(t_ls *dc, char *rep)
 		sep = ft_strdup("  ");
 	if ((dc->file = malloc(sizeof(t_file))) == NULL)
 		return ;
-	if ((dc->file->tab = malloc(sizeof(char *) * 1024)) == NULL)
+	if ((dc->file->tab = malloc(sizeof(char *) * 10240)) == NULL)
 		return ;
 	while ((dc->file->ent = readdir(dc->dir)))
 		if (dc->file->ent->d_name[0] != '.' || ft_strchr(dc->l_args, 'a'))
