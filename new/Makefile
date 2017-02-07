@@ -6,7 +6,7 @@
 #    By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 20:16:27 by sbelazou          #+#    #+#              #
-#    Updated: 2017/02/07 20:34:55 by sbelazou         ###   ########.fr        #
+#    Updated: 2017/02/07 20:46:40 by sbelazou         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -33,27 +33,28 @@ endif
 
 CC			=	/usr/bin/gcc
 RM			=	/bin/rm -f
-ECHO		=	/bin/echo -e
+ECHO		=	echo
 
 
 $(NAME)	:		$(OBJ)
-				$(CC) $(INC_LIB) $(CFLAGS) -o $(NAME) $(OBJS)
-				@$(ECHO) '> Compiled'
+				-@$(CC) $(INC_LIB) $(CFLAGS) -o $(NAME) $(OBJS)
+				@$(ECHO) "\033[33mAll sources are compiled.\033[0m"
 
 clean	:
 				@(cd $(DIROBJ) && $(RM) $(OBJ))
-				@$(ECHO) '> Directory cleaned'
+				@$(ECHO) "\033[33;32mObjects are removed.\033[0m"
 
 all		:		$(NAME)
 
 fclean	:		clean
 				-@$(RM) $(NAME)
-				@$(ECHO) '> Remove executable'
+				@$(ECHO) "\033[33;32mBinary's removed.\033[0m"
 
 re		:		fclean all
 
 zen		:		clean
-				find . \( -name "*~" -o -name "#*#" \) -delete
+				-@find . \( -name "*~" -o -name "#*#" \) -delete
+				@$(ECHO) "\033[33;32mRepository's cleaned.\033[0m"
 
 .PHONY	:		all clean fclean re
 
