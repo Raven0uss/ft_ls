@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/08 18:44:29 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/08 18:43:28 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ char				**sortime(char **tab, t_data *ls, int size);
 char				**revtime(char **tab, t_data *ls, int size);
 void				aff_ls_list(char **tab, t_data *ls);
 void				ft_optreps(t_data *ls, char **tab);
-void				aff_ls(t_data *ls, char **tab, int i);
 
 #endif
