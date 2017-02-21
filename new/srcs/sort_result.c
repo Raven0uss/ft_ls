@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:37:57 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 01:04:20 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 01:23:46 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,8 @@ char		**revtime(char **tab, t_data *ls, int size, char *rep)
 	return (tab);
 }
 
-char	**organize(char **tab, t_data *ls, char *rep)
+char	**organize(char **tab, t_data *ls, int i, char *rep)
 {
-	int	i;
-
-	i = ft_sizetab(tab) - 1;
 	if (ft_strchr(ls->args, 't'))
 	{
 		if (ft_strchr(ls->args, 'r'))

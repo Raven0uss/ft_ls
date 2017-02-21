@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 01:09:02 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 01:27:06 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static char	**encrust_rec(char **rec, t_data *ls, int pos)
 		pos++;
 	}
 	free(rec);
-	ls->reps[pos + size] = 0;
+	ls->reps[max + i] = 0;
 	return (ls->reps);
 }
 
 
-static char	**add_repository(char *to_add, char **rec, char *dir)
+static char	**add_repository(char *to_add, char **rec, char *dir, t_data *ls)
 {
 	int		i;
 
@@ -47,6 +47,8 @@ static char	**add_repository(char *to_add, char **rec, char *dir)
 		i++;
 	rec[i++] = ft_strdup(path(dir, to_add));
 	rec[i] = 0;
+	rec = organize(rec, ls, i - 1, NULL);
+	//ft_aff_tab(rec ," = ");
 	return (rec);
 }
 
@@ -101,7 +103,7 @@ void		ft_optreps(t_data *ls, char **tab)
 					tab[i] = ft_strdup(ls->ent->d_name);
 					stat(path(ls->reps[j], tab[i]), &(ls->s));
 					if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode))
-						rec = add_repository(tab[i], rec, ls->reps[j]);
+						rec = add_repository(tab[i], rec, ls->reps[j], ls);
 					i++;
 				}
 			tab[i] = 0;
@@ -112,8 +114,6 @@ void		ft_optreps(t_data *ls, char **tab)
 		j++;
 		if (rec[0] != NULL)
 		{
-			rec = organize(rec, ls, NULL);
-			ft_aff_tab(rec, " - ");
 			ls->reps = add_to_reps(rec, ls, j);
 		}
 		if (ls->reps[j])

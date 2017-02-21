@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 01:02:26 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 01:17:40 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void				aff_ls_list(char **tab, t_data *ls, char *rep);
 void				ft_optreps(t_data *ls, char **tab);
 void				aff_ls(t_data *ls, char **tab, int i, char *rep);
 char				*path(char *dir, char *str);
-char				**organize(char **tab, t_data *ls, char *rep);
+char				**organize(char **tab, t_data *ls, int i, char *rep);
 
 #endif
 
