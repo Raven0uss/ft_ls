@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 01:17:40 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 03:03:04 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char				**organize(char **tab, t_data *ls, int i, char *rep);
 /*
 TODO:
 
-!- organiser le tableau des recurs
 !- calculer le padding + calc total dans aff_ls_list
+!- ameliorer -R
 - norme au niveau des lignes
 - flags gcc
 - leaks

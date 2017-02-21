@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:19:26 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/08 16:40:26 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 02:47:36 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_data	*params_loader(t_data *ls, char **av)
 
 	i = 1;
 	j = 0;
-	if (!(ls->reps = malloc(sizeof(char *) * 1024)))// Allocation non precise
+	if (!(ls->reps = malloc(sizeof(char *) * 10240)))// Allocation non precise
 		return (NULL);
 	if (!(ls->args = ft_memalloc(1024)))// Allocation non precise
 		return (NULL);

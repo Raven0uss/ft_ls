@@ -6,7 +6,7 @@
 #    By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 20:16:27 by sbelazou          #+#    #+#              #
-#    Updated: 2017/02/08 18:42:33 by sbelazou         ###   ########.fr        #
+#    Updated: 2017/02/21 03:07:11 by sbelazou         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -56,6 +56,11 @@ re		:		fclean all
 zen		:		clean
 				-@find . \( -name "*~" -o -name "#*#" \) -delete
 				@$(ECHO) "\033[31mBack-up files are removed.\033[0m"
+
+git		:	zen fclean
+			git add *
+			git commit -am "push"
+			git push
 
 .PHONY	:		all clean fclean re
 

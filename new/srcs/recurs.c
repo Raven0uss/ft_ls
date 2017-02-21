@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 01:27:06 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 03:04:26 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,24 @@ static char	**encrust_rec(char **rec, t_data *ls, int pos)
 	int		size;
 	int		i;
 	int		max;
+	int		count;
 
-	size = ft_sizetab(rec);
+	size = ft_sizetab(rec) - 1;
 	max = ft_sizetab(ls->reps);
+	count = max;
 	i = 0;
+	ls->reps[max + size] = 0;
 	while (pos != max)
 	{
-		ls->reps[max + i] = ft_strdup(ls->reps[pos]);
-		if (rec[i])
-		{
-			ls->reps[pos] = ft_strdup(rec[i]);
-			free(rec[i]);
-		}
-		i++;
-		pos++;
+		ls->reps[max + size] = ft_strdup(ls->reps[--count]);
+		max--;
+	}
+	while (rec[i])
+	{
+		ls->reps[pos++] = ft_strdup(rec[i]);
+		free(rec[i++]);
 	}
 	free(rec);
-	ls->reps[max + i] = 0;
 	return (ls->reps);
 }
 
@@ -48,7 +49,6 @@ static char	**add_repository(char *to_add, char **rec, char *dir, t_data *ls)
 	rec[i++] = ft_strdup(path(dir, to_add));
 	rec[i] = 0;
 	rec = organize(rec, ls, i - 1, NULL);
-	//ft_aff_tab(rec ," = ");
 	return (rec);
 }
 
@@ -78,7 +78,6 @@ void		ft_optreps(t_data *ls, char **tab)
 	int		j;
 	char	**rec;
 
-	i = 0;
 	j = 0;
 	if (!ls->reps[0] && ft_strchr(ls->args, 'R'))
 	{
@@ -102,7 +101,8 @@ void		ft_optreps(t_data *ls, char **tab)
 				{
 					tab[i] = ft_strdup(ls->ent->d_name);
 					stat(path(ls->reps[j], tab[i]), &(ls->s));
-					if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode))
+					if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
+						&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
 						rec = add_repository(tab[i], rec, ls->reps[j], ls);
 					i++;
 				}
@@ -111,12 +111,9 @@ void		ft_optreps(t_data *ls, char **tab)
 			closedir(ls->dir);
 		}
 		free(tab);
-		j++;
 		if (rec[0] != NULL)
-		{
-			ls->reps = add_to_reps(rec, ls, j);
-		}
-		if (ls->reps[j])
+			ls->reps = add_to_reps(rec, ls, j + 1);
+		if (ls->reps[++j])
 		{
 			ft_putchar('\n');
 			ft_putstr(ls->reps[j]);

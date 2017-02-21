@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:37:57 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 01:23:46 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 02:54:57 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ char		*path(char *dir, char *str)
 
 	if (dir == NULL)
 		return (str);
-	result = ft_strjoin(dir, "/");
+	if (str[ft_strlen(str) - 1] != '/')
+		result = ft_strjoin(dir, "/");
+	else
+		result = ft_strdup(dir);
 	result = ft_strjoin(result, str);
 	return (result);
 }

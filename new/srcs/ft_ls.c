@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 12:35:27 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 00:09:08 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 02:40:58 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void				aff_ls(t_data *ls, char **tab, int i, char *rep)
 	if (ft_strchr(ls->args, 'l'))
 		aff_ls_list(tab, ls, rep);
 	else
-		ft_aff_tab(tab, "\n");
+		ft_aff_tab(tab, "  ");
 }
 
 static void			ft_opt(t_data *ls, char **tab)
