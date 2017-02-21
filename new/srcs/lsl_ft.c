@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:42:42 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/08 16:31:05 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 00:08:54 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void			aff_stat(t_data *ls)
 	ft_putstr(" ");
 }
 
-void				aff_ls_list(char **tab, t_data *ls)
+void				aff_ls_list(char **tab, t_data *ls, char *rep)
 {
 	int				i;
 
@@ -89,7 +89,7 @@ void				aff_ls_list(char **tab, t_data *ls)
 	//Calculer le total + checker le padding
 	while (tab[i])
 	{
-		stat(tab[i], &(ls->s));
+		stat(path(rep, tab[i]), &(ls->s));
 		aff_stat(ls);
 		ft_putendl(tab[i++]);
 	}

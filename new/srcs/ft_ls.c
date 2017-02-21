@@ -6,20 +6,20 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 12:35:27 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/08 18:45:19 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 00:09:08 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-void				aff_ls(t_data *ls, char **tab, int i)
+void				aff_ls(t_data *ls, char **tab, int i, char *rep)
 {
 	if (ft_strchr(ls->args, 't'))
 	{
 		if (ft_strchr(ls->args, 'r'))
-			tab = revtime(tab, ls, i - 1);
+			tab = revtime(tab, ls, i - 1, rep);
 		else
-			tab = sortime(tab, ls, i - 1);
+			tab = sortime(tab, ls, i - 1, rep);
 	}
 	else
 	{
@@ -29,7 +29,7 @@ void				aff_ls(t_data *ls, char **tab, int i)
 			tab = ft_sort_tab(tab, i - 1);
 	}
 	if (ft_strchr(ls->args, 'l'))
-		aff_ls_list(tab, ls);
+		aff_ls_list(tab, ls, rep);
 	else
 		ft_aff_tab(tab, "\n");
 }
@@ -48,7 +48,7 @@ static void			ft_opt(t_data *ls, char **tab)
 		while ((ls->ent = readdir(ls->dir)))
 			if (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a'))
 				tab[i++] = ft_strdup(ls->ent->d_name);
-		aff_ls(ls, tab, i);
+		aff_ls(ls, tab, i, "./");
 		closedir(ls->dir);
 		free(tab);
 	}

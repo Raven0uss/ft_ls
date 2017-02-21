@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/08 18:44:29 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/02/21 01:02:26 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,30 @@ typedef struct		s_data
 }					t_data;
 
 void				ft_ls(t_data *ls);
-char				**sortime(char **tab, t_data *ls, int size);
-char				**revtime(char **tab, t_data *ls, int size);
-void				aff_ls_list(char **tab, t_data *ls);
+char				**sortime(char **tab, t_data *ls, int size, char *rep);
+char				**revtime(char **tab, t_data *ls, int size, char *rep);
+void				aff_ls_list(char **tab, t_data *ls, char *rep);
 void				ft_optreps(t_data *ls, char **tab);
-void				aff_ls(t_data *ls, char **tab, int i);
+void				aff_ls(t_data *ls, char **tab, int i, char *rep);
+char				*path(char *dir, char *str);
+char				**organize(char **tab, t_data *ls, char *rep);
 
 #endif
+
+/*
+TODO:
+
+!- organiser le tableau des recurs
+!- calculer le padding + calc total dans aff_ls_list
+- norme au niveau des lignes
+- flags gcc
+- leaks
+
+ */
+
+
+
+
+
+
+
