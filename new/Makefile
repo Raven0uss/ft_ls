@@ -6,7 +6,7 @@
 #    By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 20:16:27 by sbelazou          #+#    #+#              #
-#    Updated: 2017/02/21 03:07:11 by sbelazou         ###   ########.fr        #
+#    Updated: 2017/02/21 03:12:37 by sbelazou         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -58,8 +58,8 @@ zen		:		clean
 				@$(ECHO) "\033[31mBack-up files are removed.\033[0m"
 
 git		:	zen fclean
-			git add *
-			git commit -am "push"
+			git add -f *
+			git commit -am "Push with Makefile"
 			git push
 
 .PHONY	:		all clean fclean re

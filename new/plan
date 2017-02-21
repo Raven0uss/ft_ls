@@ -1,0 +1,5 @@
+- calculer le padding + calc total dans aff_ls_list
+- ameliorer -R
+- norme au niveau des lignes
+- flags gcc
+- leaks
