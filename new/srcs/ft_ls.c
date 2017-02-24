@@ -21,13 +21,10 @@ void				aff_ls(t_data *ls, char **tab, int i)
 		else
 			tab = sortime(tab, ls, i - 1);
 	}
+	else if (ft_strchr(ls->args, 'r'))
+		tab = ft_rev_tab(tab, i - 1);
 	else
-	{
-		if (ft_strchr(ls->args, 'r'))
-			tab = ft_rev_tab(tab, i - 1);
-		else
-			tab = ft_sort_tab(tab, i - 1);
-	}
+		tab = ft_sort_tab(tab, i - 1);
 	if (ft_strchr(ls->args, 'l'))
 		aff_ls_list(tab, ls);
 	else

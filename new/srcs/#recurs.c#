@@ -25,8 +25,6 @@ static char	**place(char **recur, t_data *ls, int pos, int size)
     }
   while (i != size)
     {
-       (ls->reps[pos])
-	
 	  tmp = ls->reps[pos];
     
       
