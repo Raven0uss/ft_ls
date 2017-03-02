@@ -6,7 +6,7 @@
 #    By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 18:53:41 by sbelazou          #+#    #+#              #
-#    Updated: 2017/01/10 17:47:30 by sbelazou         ###   ########.fr        #
+#    Updated: 2017/03/02 20:13:17 by sbelazou         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -29,31 +29,28 @@ OBJ			=	$(SRC:.c=.o)
 CFLAGS		=	-Wall -Wextra -Werror
 CC			=	/usr/bin/gcc
 RM			=	/bin/rm -f
-ECHO		=	/bin/echo -e
+ECHO		=	echo
 
 
 $(NAME)	:		$(OBJ)
-				ar rc $(NAME) $(OBJ)
-				@$(ECHO) '> Compiled'
+				-@ar rc $(NAME) $(OBJ)
+				@$(ECHO) "\033[32mAll sources has been compiled."
+				@$(ECHO) "$(NAME) has been created.\033[0m"
 
 run :
-		ranlib $(NAME)
-		@$(ECHO) '$>> Index generated !'
+				ranlib $(NAME)
+				@$(ECHO) "\033[32mIndex has been generated.\033[0m"
 
 clean	:
 				@$(RM) $(OBJ)
-				@$(ECHO) '$>> Directory cleaned !'
+				@$(ECHO) "\033[31mObjects of $(NAME) has been removed.\033[0m"
 
 all		:		$(NAME)
 
-fclean	:		clean
+fclean	:
 				-@$(RM) $(NAME)
-				@$(ECHO) '$>> Executable as been removed.'
+				@$(ECHO) "\033[31m$(NAME) has been removed.\033[0m"
 
 re		:		fclean all
 
-dtmp	:
-				-@$(RM) *~ && $(RM) \#*\#
-				@$(ECHO) '$>> Tempory files removed !'
-
-.PHONY	:		all clean fclean re dtmp
+.PHONY	:		all clean fclean re

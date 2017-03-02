@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 12:35:27 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 02:40:58 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/02 21:40:33 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,14 @@ static void			ft_opt(t_data *ls, char **tab)
 		free(tab);
 	}
 	else
-		ft_optreps(ls, tab);
+	{
+		if (!(ls->reps[0]))
+		{
+			ls->reps[0] = ft_strdup(".");
+			ls->reps[1] = 0;
+		}
+		ft_optreps(ls, tab, 0);
+	}
 }
 
 void				ft_ls(t_data *ls)

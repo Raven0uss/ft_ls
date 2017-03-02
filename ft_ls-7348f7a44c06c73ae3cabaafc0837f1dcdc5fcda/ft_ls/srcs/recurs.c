@@ -6,20 +6,20 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 04:53:21 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/02 21:50:54 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-static char	**encrust_rec(char **rec, t_data *ls, int pos)
+static char	**encrust_rec(t_data *ls, int pos)
 {
 	unsigned int		size;
 	unsigned int		i;
 	unsigned int		max;
 	unsigned int		count;
 
-	size = ft_sizetab(rec) - 1;
+	size = ft_sizetab(ls->recs) - 1;
 	max = ft_sizetab(ls->reps);
 	count = max;
 	i = 0;
@@ -29,56 +29,54 @@ static char	**encrust_rec(char **rec, t_data *ls, int pos)
 		ls->reps[max + size] = ft_strdup(ls->reps[--count]);
 		max--;
 	}
-	while (rec[i])
+	while (ls->recs[i])
 	{
-		ls->reps[pos++] = ft_strdup(rec[i]);
-		free(rec[i++]);
+		ls->reps[pos++] = ft_strdup(ls->recs[i]);
+		free(ls->recs[i]);
+		ls->recs[i++] = 0;
 	}
-	free(rec);
 	return (ls->reps);
 }
 
-static char	**add_repository(char *to_add, char **rec, char *dir, t_data *ls)
+static char	**add_repository(char *to_add, char *dir, t_data *ls)
 {
 	int		i;
 
 	i = 0;
-	while (rec[i])
+	while (ls->recs[i])
 		i++;
-	rec[i++] = ft_strdup(path(dir, to_add));
-	rec[i] = 0;
-	rec = organize(rec, ls, i - 1, NULL);
-	return (rec);
+	ls->recs[i++] = ft_strdup(path(dir, to_add));
+	ls->recs[i] = 0;
+	ls->recs = organize(ls->recs, ls, i - 1, NULL);
+	return (ls->recs);
 }
 
-static char	**add_to_reps(char **rec, t_data *ls, int pos)
+static char	**add_to_reps(t_data *ls, int pos)
 {
 	int		i;
 
 	i = 0;
 	if (!ls->reps[pos])
 	{
-		while (rec[i])
+		while (ls->recs[i])
 		{
-			ls->reps[pos++] = ft_strdup(rec[i]);
-			free(rec[i++]);
+			ls->reps[pos++] = ft_strdup(ls->recs[i]);
+			free(ls->recs[i]);
+			ls->recs[i++] = 0;
 		}
-		free(rec);
 		ls->reps[pos] = 0;
 	}
 	else
-		ls->reps = encrust_rec(rec, ls, pos);
+		ls->reps = encrust_rec(ls, pos);
 	return (ls->reps);
 }
 
-static char	**loop_optreps(t_data *ls, char **tab, char **rec, char *repo)
+static char	**loop_optreps(t_data *ls, char **tab, char *repo)
 {
 	int		i;
 
 	i = 0;
-	if (!(rec = malloc(sizeof(char *) * 1024)))
-		return (NULL);
-	rec[0] = NULL;
+	ls->recs[0] = NULL;
 	if (!(ls->dir = opendir(repo)))
 		perror(repo);
 	else
@@ -90,16 +88,16 @@ static char	**loop_optreps(t_data *ls, char **tab, char **rec, char *repo)
 				stat(path(repo, tab[i]), &(ls->s));
 				if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
 					&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
-					rec = add_repository(tab[i], rec, repo, ls);
+					ls->recs = add_repository(tab[i], repo, ls);
 				i++;
 			}
 		tab[i] = 0;
 		aff_ls(ls, tab, i, repo);
 		closedir(ls->dir);
 	}
-	return (rec);
+	return (ls->recs);
 }
-
+/*
 void		ft_optreps(t_data *ls, char **tab)
 {
 	int		i;
@@ -126,5 +124,26 @@ void		ft_optreps(t_data *ls, char **tab)
 			ft_putstr(ls->reps[j]);
 			ft_putendl(":");
 		}
+	}
+	}*/
+
+
+void		ft_optreps(t_data *ls, char **tab, int j)
+{
+	if (ls->reps[j])
+	{
+		if (!(tab = malloc(sizeof(char *) * 1024)))
+			return ;
+		ls->recs = loop_optreps(ls, tab, ls->reps[j]);
+		free(tab);
+		if (ls->recs[0] != NULL)
+			ls->reps = add_to_reps(ls, j + 1);
+		if (ls->reps[++j])
+		{
+			ft_putchar('\n');
+			ft_putstr(ls->reps[j]);
+			ft_putendl(":");
+		}
+		ft_optreps(ls, tab, j);
 	}
 }

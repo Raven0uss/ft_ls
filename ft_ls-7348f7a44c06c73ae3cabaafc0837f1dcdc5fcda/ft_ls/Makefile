@@ -6,7 +6,7 @@
 #    By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 20:16:27 by sbelazou          #+#    #+#              #
-#    Updated: 2017/02/21 03:12:37 by sbelazou         ###   ########.fr        #
+#    Updated: 2017/03/02 20:12:43 by sbelazou         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -37,17 +37,20 @@ ECHO		=	echo
 
 
 $(NAME)	:		$(OBJ)
+				make -C includes/libft/
 				-@$(CC) $(INC_LIB) $(CFLAGS) -o $(NAME) $(OBJS)
-				@$(ECHO) "\033[32mAll sources are compiled."
+				@$(ECHO) "\033[32mAll sources are compiled. "
 				@$(ECHO) "$(NAME) has been created.\033[0m"
 
 clean	:
+				-@make clean -C includes/libft/
 				@(cd $(DIROBJ) && $(RM) $(OBJ))
-				@$(ECHO) "\033[31mObjects are removed.\033[0m"
+				@$(ECHO) "\033[31mObjects of $(NAME) has been removed.\033[0m"
 
 all		:		$(NAME)
 
 fclean	:		clean
+				-@make fclean -C includes/libft/
 				-@$(RM) $(NAME)
 				@$(ECHO) "\033[31m$(NAME) has been removed.\033[0m"
 
@@ -55,7 +58,7 @@ re		:		fclean all
 
 zen		:		clean
 				-@find . \( -name "*~" -o -name "#*#" \) -delete
-				@$(ECHO) "\033[31mBack-up files are removed.\033[0m"
+				@$(ECHO) "\033[31mBack-up files has been removed.\033[0m"
 
 git		:	zen fclean
 			git add -f *
