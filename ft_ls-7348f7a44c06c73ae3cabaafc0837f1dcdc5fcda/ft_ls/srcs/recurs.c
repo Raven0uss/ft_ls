@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/02 21:50:54 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/02 21:57:28 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	**add_repository(char *to_add, char *dir, t_data *ls)
 		i++;
 	ls->recs[i++] = ft_strdup(path(dir, to_add));
 	ls->recs[i] = 0;
-	ls->recs = organize(ls->recs, ls, i - 1, NULL);
+	//ls->recs = organize(ls->recs, ls, i - 1, NULL);
 	return (ls->recs);
 }
 
@@ -97,36 +97,6 @@ static char	**loop_optreps(t_data *ls, char **tab, char *repo)
 	}
 	return (ls->recs);
 }
-/*
-void		ft_optreps(t_data *ls, char **tab)
-{
-	int		i;
-	int		j;
-	char	**rec;
-
-	j = 0;
-	if (!ls->reps[0] && ft_strchr(ls->args, 'R'))
-	{
-		ls->reps[0] = ft_strdup(".");
-		ls->reps[1] = 0;
-	}
-	while (ls->reps[j])
-	{
-		if (!(tab = malloc(sizeof(char *) * 10240)))// Allocation non precise
-			return ;
-		rec = loop_optreps(ls, tab, rec, ls->reps[j]);
-		free(tab);
-		if (rec[0] != NULL)
-			ls->reps = add_to_reps(rec, ls, j + 1);
-		if (ls->reps[++j])
-		{
-			ft_putchar('\n');
-			ft_putstr(ls->reps[j]);
-			ft_putendl(":");
-		}
-	}
-	}*/
-
 
 void		ft_optreps(t_data *ls, char **tab, int j)
 {
