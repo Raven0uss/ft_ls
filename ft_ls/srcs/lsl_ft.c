@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:42:42 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/02/21 00:08:54 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/06 21:34:32 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,25 @@ static void			aff_stat(t_data *ls)
 	ft_putstr(" ");
 }
 
+char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep)
+{
+	int				i;
+
+	i = 0;
+	ft_putendl("total ");
+	//Calculer le total + checker le padding
+	while (tab[i])
+	{
+		stat(path(rep, tab[i]), &(ls->s));
+		aff_stat(ls);
+		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
+			&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
+			ls->recs = add_repository(tab[i], rep, ls);
+		ft_putendl(tab[i++]);
+	}
+	return (ls->recs);
+}
+
 void				aff_ls_list(char **tab, t_data *ls, char *rep)
 {
 	int				i;
@@ -94,3 +113,8 @@ void				aff_ls_list(char **tab, t_data *ls, char *rep)
 		ft_putendl(tab[i++]);
 	}
 }
+
+
+
+
+

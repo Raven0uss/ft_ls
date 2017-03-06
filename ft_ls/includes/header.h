@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/02 21:40:43 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/06 21:33:35 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void				ft_optreps(t_data *ls, char **tab, int j);
 void				aff_ls(t_data *ls, char **tab, int i, char *rep);
 char				*path(char *dir, char *str);
 char				**organize(char **tab, t_data *ls, int i, char *rep);
+char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep);
+char				**add_repository(char *to_add, char *dir, t_data *ls);
 
 #endif
 

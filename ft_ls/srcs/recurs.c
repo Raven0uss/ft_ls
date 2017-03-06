@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/02 21:57:28 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/06 21:37:12 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	**encrust_rec(t_data *ls, int pos)
 	return (ls->reps);
 }
 
-static char	**add_repository(char *to_add, char *dir, t_data *ls)
+char	**add_repository(char *to_add, char *dir, t_data *ls)
 {
 	int		i;
 
@@ -71,7 +71,50 @@ static char	**add_to_reps(t_data *ls, int pos)
 	return (ls->reps);
 }
 
-static char	**loop_optreps(t_data *ls, char **tab, char *repo)
+static char 	**ft_aff_tab_rec(char **tab, char *sep, char *rep, t_data *ls)
+{
+	int			i;
+
+	i = 0;
+	while (tab[i])
+	{
+		ft_putstr(tab[i]);
+		stat(path(rep, tab[i]), &(ls->s));
+		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
+			&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
+			ls->recs = add_repository(tab[i], rep, ls);
+		i++;
+		if (tab[i])
+			ft_putstr(sep);
+	}
+	ft_putchar('\n');
+	return (ls->recs);
+}
+
+static char		**aff_ls_rec(t_data *ls, char **tab, int i, char *rep)
+{
+	if (ft_strchr(ls->args, 't'))
+	{
+		if (ft_strchr(ls->args, 'r'))
+			tab = revtime(tab, ls, i - 1, rep);
+		else
+			tab = sortime(tab, ls, i - 1, rep);
+	}
+	else
+	{
+		if (ft_strchr(ls->args, 'r'))
+			tab = ft_rev_tab(tab, i - 1);
+		else
+			tab = ft_sort_tab(tab, i - 1);
+	}
+	if (ft_strchr(ls->args, 'l'))
+		ls->recs = aff_ls_list_rec(tab, ls, rep);
+	else
+		ls->recs = ft_aff_tab_rec(tab, "  ", rep, ls);
+	return (ls->recs);
+}
+
+static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 {
 	int		i;
 
@@ -86,13 +129,13 @@ static char	**loop_optreps(t_data *ls, char **tab, char *repo)
 			{
 				tab[i] = ft_strdup(ls->ent->d_name);
 				stat(path(repo, tab[i]), &(ls->s));
-				if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
+				/*if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
 					&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
-					ls->recs = add_repository(tab[i], repo, ls);
+					ls->recs = add_repository(tab[i], repo, ls);*/
 				i++;
 			}
 		tab[i] = 0;
-		aff_ls(ls, tab, i, repo);
+		ls->recs = aff_ls_rec(ls, tab, i, repo);
 		closedir(ls->dir);
 	}
 	return (ls->recs);
