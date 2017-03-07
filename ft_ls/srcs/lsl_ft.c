@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:42:42 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/06 21:34:32 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/07 15:34:40 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ static void			affgiduid(uid_t uid, gid_t gid)
 static void			aff_stat(t_data *ls)
 {
 	aff_perm(ls->s.st_mode);
-	ft_putstr(" ");
+	ft_putstr("  ");
 	ft_putnbr(ls->s.st_nlink);
 	ft_putstr(" ");
 	affgiduid(ls->s.st_uid, ls->s.st_gid);
-	ft_putstr(" ");
+	ft_putstr("  ");
 	ft_putnbr(ls->s.st_size);
-	ft_putstr(" ");
+	ft_putstr("  ");
 	data_padd(ctime(&(ls->s.st_mtime)));
 	ft_putstr(" ");
 }
