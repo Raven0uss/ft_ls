@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/06 21:37:12 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/07 12:48:34 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static char		**aff_ls_rec(t_data *ls, char **tab, int i, char *rep)
 
 static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 {
-	int		i;
+	unsigned int		i;
 
 	i = 0;
 	ls->recs[0] = NULL;
@@ -126,20 +126,25 @@ static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 	{
 		while ((ls->ent = readdir(ls->dir)))
 			if (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a'))
-			{
-				tab[i] = ft_strdup(ls->ent->d_name);
-				stat(path(repo, tab[i]), &(ls->s));
-				/*if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
-					&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
-					ls->recs = add_repository(tab[i], repo, ls);*/
-				i++;
-			}
+				tab[i++] = ft_strdup(ls->ent->d_name);
 		tab[i] = 0;
 		ls->recs = aff_ls_rec(ls, tab, i, repo);
 		closedir(ls->dir);
 	}
 	return (ls->recs);
 }
+
+static void	ft_recurs(t_data *ls)
+{
+	int		i;
+
+	i = 0;
+	while (ls->recs[i])
+	{
+		i++;
+	}
+}
+
 
 void		ft_optreps(t_data *ls, char **tab, int j)
 {
@@ -150,7 +155,9 @@ void		ft_optreps(t_data *ls, char **tab, int j)
 		ls->recs = loop_optreps(ls, tab, ls->reps[j]);
 		free(tab);
 		if (ls->recs[0] != NULL)
-			ls->reps = add_to_reps(ls, j + 1);
+			; // Recursive has to work
+			//ft_recurs(ls);
+			//ls->reps = add_to_reps(ls, j + 1);
 		if (ls->reps[++j])
 		{
 			ft_putchar('\n');
