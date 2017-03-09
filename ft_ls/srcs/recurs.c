@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/07 17:13:52 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/09 20:48:50 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	**encrust_rec(t_data *ls, int pos)
 	max = ft_sizetab(ls->reps);
 	count = max;
 	i = 0;
-	ls->reps[max + size] = 0;
+	ls->reps[max + size + 1] = 0;
 	while (pos != max)
 	{
 		ls->reps[max + size] = ft_strdup(ls->reps[--count]);
@@ -81,7 +81,7 @@ static char 	**ft_aff_tab_rec(char **tab, char *sep, char *rep, t_data *ls)
 		ft_putstr(tab[i]);
 		stat(path(rep, tab[i]), &(ls->s));
 		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
-			&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))
+			&& (ft_strcmp(".", tab[i]) || ft_strcmp("..", tab[i])))
 			ls->recs = add_repository(tab[i], rep, ls);
 		i++;
 		if (tab[i])
@@ -151,6 +151,24 @@ static void	ft_recurs(t_data *ls)
 	}
 }
 
+static char **remove_first(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (tab[i + 1])
+			tab[i] = ft_strdup(tab[i + 1]);
+		else
+		{
+			tab[i] = 0;
+			return (tab);
+		}
+		i++;
+	}
+	return (tab);
+}
 
 void		ft_optreps(t_data *ls, char **tab, int j)
 {
@@ -161,14 +179,15 @@ void		ft_optreps(t_data *ls, char **tab, int j)
 		ls->recs = loop_optreps(ls, tab, ls->reps[j]);
 		free(tab);
 		if (ls->recs[0] != NULL)
-			ft_recurs(ls);
-		//ls->reps = add_to_reps(ls, j + 1);
-		if (ls->reps[++j])
+			//ft_recurs(ls);
+			ls->reps = add_to_reps(ls, j + 1);
+		if (ls->reps[j + 1])
 		{
 			ft_putchar('\n');
-			ft_putstr(ls->reps[j]);
+			ft_putstr(ls->reps[j + 1]);
 			ft_putendl(":");
 		}
+		ls->reps = remove_first(ls->reps);
 		ft_optreps(ls, tab, j);
 	}
 }
