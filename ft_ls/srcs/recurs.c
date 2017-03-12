@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 18:05:03 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/12 18:22:12 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static char		**aff_ls_rec(t_data *ls, char **tab, int i, char *rep)
 	if (ft_strchr(ls->args, 'l'))
 		ls->recs = aff_ls_list_rec(tab, ls, rep);
 	else
-		ls->recs = ft_aff_tab_rec(tab, "  ", rep, ls);
+		ls->recs = ft_aff_tab_rec(tab, "\n", rep, ls);
 	return (ls->recs);
 }
 

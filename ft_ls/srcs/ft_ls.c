@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 12:35:27 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 17:42:04 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/12 18:27:59 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void				aff_ls(t_data *ls, char **tab, int i, char *rep)
 	if (ft_strchr(ls->args, 'l'))
 		aff_ls_list(tab, ls, rep);
 	else
-		ft_aff_tab(tab, "  ");
+		ft_aff_tab(tab, "\n");
 }
 
 static void			ft_opt(t_data *ls, char **tab)
@@ -48,7 +48,8 @@ static void			ft_opt(t_data *ls, char **tab)
 		while ((ls->ent = readdir(ls->dir)))
 			if (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a'))
 				tab[i++] = ft_strdup(ls->ent->d_name);
-		aff_ls(ls, tab, i, "./");
+		if (i != 0)
+			aff_ls(ls, tab, i, "./");
 		closedir(ls->dir);
 		free(tab);
 	}
@@ -81,7 +82,8 @@ void				ft_ls(t_data *ls)
 		while ((ent = readdir(dir)))
 			if (ent->d_name[0] != '.')
 				tab[i++] = ft_strdup(ent->d_name);
-		ft_aff_tab(ft_sort_tab(tab, i - 1), "\n");
+		if (i != 0)
+			ft_aff_tab(ft_sort_tab(tab, i - 1), "\n");
 		closedir(dir);
 		free(tab);
 		return ;
