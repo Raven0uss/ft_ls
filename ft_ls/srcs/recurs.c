@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/09 20:48:50 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/12 18:05:03 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 			if (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a'))
 				tab[i++] = ft_strdup(ls->ent->d_name);
 		tab[i] = 0;
-		ls->recs = aff_ls_rec(ls, tab, i, repo);
+		if (i != 0)
+			ls->recs = aff_ls_rec(ls, tab, i, repo);
 		closedir(ls->dir);
 	}
 	return (ls->recs);
@@ -143,7 +144,7 @@ static void	ft_recurs(t_data *ls)
 	while (ls->recs[i])
 	{
 		ft_putendl(ls->recs[i]);
-		if (!(tab = malloc(sizeof(char *) * 1024)))
+		if (!(tab = malloc(sizeof(char *) * 10240)))
 			return ;
 		loop_optreps(ls, tab, ls->recs[i]);
 		free(tab);
@@ -174,7 +175,7 @@ void		ft_optreps(t_data *ls, char **tab, int j)
 {
 	if (ls->reps[j])
 	{
-		if (!(tab = malloc(sizeof(char *) * 1024)))
+		if (!(tab = malloc(sizeof(char *) * 42424)))
 			return ;
 		ls->recs = loop_optreps(ls, tab, ls->reps[j]);
 		free(tab);
