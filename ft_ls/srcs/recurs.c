@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 18:37:17 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/12 18:59:13 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,19 @@ static char	**encrust_rec(t_data *ls, int pos)
 
 char	**add_repository(char *to_add, char *dir, t_data *ls)
 {
-	int		i;
+	unsigned int		i;
 
 	i = 0;
 	while (ls->recs[i])
 		i++;
 	ls->recs[i++] = ft_strdup(path(dir, to_add));
 	ls->recs[i] = 0;
-	//ls->recs = organize(ls->recs, ls, i - 1, NULL);
 	return (ls->recs);
 }
 
 static char	**add_to_reps(t_data *ls, int pos)
 {
-	int		i;
+	unsigned int		i;
 
 	i = 0;
 	if (!ls->reps[pos])
@@ -135,23 +134,6 @@ static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 	return (ls->recs);
 }
 
-static void	ft_recurs(t_data *ls)
-{
-	char	**tab;
-	int		i;
-
-	i = 0;
-	while (ls->recs[i])
-	{
-		ft_putendl(ls->recs[i]);
-		if (!(tab = malloc(sizeof(char *) * 10240)))
-			return ;
-		loop_optreps(ls, tab, ls->recs[i]);
-		free(tab);
-		i++;
-	}
-}
-
 static char **remove_first(char **tab)
 {
 	int		i;
@@ -180,7 +162,6 @@ void		ft_optreps(t_data *ls, char **tab, int j)
 		ls->recs = loop_optreps(ls, tab, ls->reps[j]);
 		free(tab);
 		if (ls->recs[0] != NULL)
-			//ft_recurs(ls);
 			ls->reps = add_to_reps(ls, j + 1);
 		if (ls->reps[j + 1])
 		{
