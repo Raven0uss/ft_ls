@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 18:22:12 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/12 18:37:17 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char 	**ft_aff_tab_rec(char **tab, char *sep, char *rep, t_data *ls)
 		ft_putstr(tab[i]);
 		stat(path(rep, tab[i]), &(ls->s));
 		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
-			&& (ft_strcmp(".", tab[i]) || ft_strcmp("..", tab[i])))
+			&& ((ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i]))))
 			ls->recs = add_repository(tab[i], rep, ls);
 		i++;
 		if (tab[i])
