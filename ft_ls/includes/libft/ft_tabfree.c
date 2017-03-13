@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 16:37:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2016/11/08 19:33:41 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:42:41 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ void		ft_tabfree(char ***tab)
 
 	i = 0;
 	while (*tab[i])
-	  free(*tab[i++]);
+		free(*tab[i++]);
 	free(*tab[i]);
 }

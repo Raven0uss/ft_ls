@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:37:57 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/02 21:43:11 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:36:50 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char		*path(char *dir, char *str)
 	if (dir == NULL)
 		return (str);
 	if (!(result = malloc(sizeof(char) *
-			      (ft_strlen(dir) + ft_strlen(str) + 3))))
-	    return (NULL);
+						(ft_strlen(dir) + ft_strlen(str) + 3))))
+		return (NULL);
 	ft_strcpy(result, dir);
 	if (str[0] != '/' && dir[ft_strlen(dir) - 1] != '/')
 		ft_strcat(result, "/");
@@ -28,35 +28,37 @@ char		*path(char *dir, char *str)
 	return (result);
 }
 
+t_data		*ft_stat(char *rep, char *str, t_data *ls)
+{
+	char	*way;
+
+	way = path(rep, str);
+	stat(way, &(ls->s));
+	free(way);
+	return (ls);
+}
+
 char		**sortime(char **tab, t_data *ls, int size, char *rep)
 {
 	int		i;
 	char	*tmp;
 	int		timod;
-	char		*way;
 
-	
 	i = 0;
 	timod = 0;
 	tab = ft_sort_tab(tab, size);
-	way = path(rep, tab[i]);
-	stat(way, &(ls->s));
-	free(way);
+	ls = ft_stat(rep, tab[i], ls);
 	while (i < size)
 	{
 		timod = ls->s.st_mtime;
-		way = path(rep, tab[i + 1]);
-		stat(way, &(ls->s));
-		free(way);
+		ls = ft_stat(rep, tab[i + 1], ls);
 		if (timod < ls->s.st_mtime)
 		{
 			tmp = tab[i];
 			tab[i] = tab[i + 1];
 			tab[i + 1] = tmp;
 			i = 0;
-			way = path(rep, tab[i]);
-			stat(way, &(ls->s));
-			free(way);
+			ls = ft_stat(rep, tab[i], ls);
 		}
 		else
 			i++;
@@ -69,27 +71,22 @@ char		**revtime(char **tab, t_data *ls, int size, char *rep)
 	int		i;
 	char	*tmp;
 	int		timod;
-	char		*way;
-	
+
 	i = 0;
 	timod = 0;
 	tab = ft_rev_tab(tab, size);
-	way = path(rep, tab[i]);
-	stat(way, &(ls->s));
-	free(way);
+	ls = ft_stat(rep, tab[i], ls);
 	while (i < size)
 	{
 		timod = ls->s.st_mtime;
-		way = path(rep, tab[i + 1]);
-		stat(way, &(ls->s));
-		free(way);
+		ls = ft_stat(rep, tab[i + 1], ls);
 		if (timod > ls->s.st_mtime)
 		{
 			tmp = tab[i];
 			tab[i] = tab[i + 1];
 			tab[i + 1] = tmp;
 			i = 0;
-			stat(path(rep, tab[i]), &(ls->s));
+			ls = ft_stat(rep, tab[i], ls);
 		}
 		else
 			i++;
@@ -97,7 +94,7 @@ char		**revtime(char **tab, t_data *ls, int size, char *rep)
 	return (tab);
 }
 
-char	**organize(char **tab, t_data *ls, int i, char *rep)
+char		**organize(char **tab, t_data *ls, int i, char *rep)
 {
 	if (ft_strchr(ls->args, 't'))
 	{

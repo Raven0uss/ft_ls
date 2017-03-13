@@ -6,18 +6,18 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 18:59:13 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:20:02 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-static char	**encrust_rec(t_data *ls, int pos)
+static char			**encrust_rec(t_data *ls, int pos)
 {
-	unsigned int		size;
-	unsigned int		i;
-	unsigned int		max;
-	unsigned int		count;
+	unsigned int	size;
+	unsigned int	i;
+	unsigned int	max;
+	unsigned int	count;
 
 	size = ft_sizetab(ls->recs) - 1;
 	max = ft_sizetab(ls->reps);
@@ -38,21 +38,9 @@ static char	**encrust_rec(t_data *ls, int pos)
 	return (ls->reps);
 }
 
-char	**add_repository(char *to_add, char *dir, t_data *ls)
+static char			**add_to_reps(t_data *ls, int pos)
 {
-	unsigned int		i;
-
-	i = 0;
-	while (ls->recs[i])
-		i++;
-	ls->recs[i++] = ft_strdup(path(dir, to_add));
-	ls->recs[i] = 0;
-	return (ls->recs);
-}
-
-static char	**add_to_reps(t_data *ls, int pos)
-{
-	unsigned int		i;
+	unsigned int	i;
 
 	i = 0;
 	if (!ls->reps[pos])
@@ -70,55 +58,9 @@ static char	**add_to_reps(t_data *ls, int pos)
 	return (ls->reps);
 }
 
-static char 	**ft_aff_tab_rec(char **tab, char *sep, char *rep, t_data *ls)
+static	char		**loop_optreps(t_data *ls, char **tab, char *repo)
 {
-	int			i;
-	char			*way;
-	
-	i = 0;
-	while (tab[i])
-	{
-		ft_putstr(tab[i]);
-		way = path(rep, tab[i]);
-		stat(way, &(ls->s));
-		free(way);
-		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
-			&& ((ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i]))))
-			ls->recs = add_repository(tab[i], rep, ls);
-		i++;
-		if (tab[i])
-			ft_putstr(sep);
-	}
-	ft_putchar('\n');
-	return (ls->recs);
-}
-
-static char		**aff_ls_rec(t_data *ls, char **tab, int i, char *rep)
-{
-	if (ft_strchr(ls->args, 't'))
-	{
-		if (ft_strchr(ls->args, 'r'))
-			tab = revtime(tab, ls, i - 1, rep);
-		else
-			tab = sortime(tab, ls, i - 1, rep);
-	}
-	else
-	{
-		if (ft_strchr(ls->args, 'r'))
-			tab = ft_rev_tab(tab, i - 1);
-		else
-			tab = ft_sort_tab(tab, i - 1);
-	}
-	if (ft_strchr(ls->args, 'l'))
-		ls->recs = aff_ls_list_rec(tab, ls, rep);
-	else
-		ls->recs = ft_aff_tab_rec(tab, "\n", rep, ls);
-	return (ls->recs);
-}
-
-static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
-{
-	unsigned int		i;
+	unsigned int	i;
 
 	i = 0;
 	ls->recs[0] = NULL;
@@ -127,24 +69,20 @@ static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 	else
 	{
 		while ((ls->ent = readdir(ls->dir)))
-			if (ls->ent->d_name && (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a')))
+			if (ls->ent->d_name[0] &&
+				(ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a')))
 				tab[i++] = ft_strdup(ls->ent->d_name);
 		tab[i] = 0;
 		if (i != 0)
-		  {
 			ls->recs = aff_ls_rec(ls, tab, i, repo);
-			/*while (i > 0)
-			  if (tab[--i])
-			  free(tab[i]);*/
-		  }
 		closedir(ls->dir);
 	}
 	return (ls->recs);
 }
 
-static char **remove_first(char **tab)
+static char			**remove_first(char **tab)
 {
-	int		i;
+	int				i;
 
 	i = 0;
 	while (tab[i])
@@ -161,8 +99,7 @@ static char **remove_first(char **tab)
 	return (tab);
 }
 
-
-void		ft_optreps(t_data *ls, char **tab, int j)
+void				ft_optreps(t_data *ls, char **tab, int j)
 {
 	if (ls->reps[j])
 	{

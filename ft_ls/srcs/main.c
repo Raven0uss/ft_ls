@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:19:26 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 15:28:32 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:28:58 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,15 @@ static t_data	*params_loader(t_data *ls, char **av)
 	int			i;
 	int			j;
 
-	i = 1;
+	i = 0;
 	j = 0;
-	if (!(ls->reps = malloc(sizeof(char *) * 10240)))// Allocation non precise
+	if (!(ls->reps = malloc(sizeof(char *) * 10240)))
 		return (NULL);
-	if (!(ls->args = ft_memalloc(1024)))// Allocation non precise
+	if (!(ls->args = ft_memalloc(1024)))
 		return (NULL);
 	if (!(ls->recs = malloc(sizeof(char *) * 10240)))
 		return (NULL);
-	while (av[i])
-	{
+	while (av[++i])
 		if (av[i][0] == '-' && av[i][1])
 		{
 			if (!(ls->args = arg_checker(av[i], ls->args)))
@@ -69,8 +68,6 @@ static t_data	*params_loader(t_data *ls, char **av)
 		}
 		else
 			ls->reps[j++] = ft_strdup(av[i]);
-		i++;
-	}
 	ls->reps[j] = 0;
 	if (ls->args[0])
 		ls->args = ft_onlyone(ls->args);
@@ -81,7 +78,6 @@ int				main(int ac, char **av)
 {
 	t_data		*ls;
 
-	
 	if (!(ls = malloc(sizeof(t_data))))
 		return (-1);
 	if (ac > 1)
@@ -91,12 +87,12 @@ int				main(int ac, char **av)
 	}
 	else
 		ls = NULL;
-	ft_ls(ls);
+	ft_ls(ls, 0);
 	if (ls != NULL)
-	  {
-	    ft_tabfree(&(ls->recs));
-	    free(ls->args);
-	  }
+	{
+		ft_tabfree(&(ls->recs));
+		free(ls->args);
+	}
 	free(ls);
 	return (0);
 }

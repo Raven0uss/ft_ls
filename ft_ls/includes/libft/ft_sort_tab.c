@@ -6,20 +6,20 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 18:32:20 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/01/10 17:48:29 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:48:41 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_sort_tab(char **tab, int size)
+char		**ft_sort_tab(char **tab, int size)
 {
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < size)
-    {
+	{
 		if (ft_strcmp(tab[i], tab[i + 1]) > 0)
 		{
 			tmp = tab[i];
@@ -29,6 +29,6 @@ char	**ft_sort_tab(char **tab, int size)
 		}
 		else
 			i++;
-    }
+	}
 	return (tab);
 }

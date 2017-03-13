@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 14:29:38 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/01/10 17:47:18 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:42:21 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ int						ft_sqrt(int nb);
 int						ft_pow(int nb, int pow);
 int						ft_fact(int nb);
 int						ft_isblank(int c);
-char						**ft_sort_tab(char **tab, int size);
+char					**ft_sort_tab(char **tab, int size);
 char					**ft_rev_tab(char **tab, int size);
-void						ft_aff_tab(char **tab, char *sep);
+void					ft_aff_tab(char **tab, char *sep);
 int						ft_strcmp_case(const char *s1, const char *s2);
-char						*ft_onlyone(char *str);
+char					*ft_onlyone(char *str);
 int						ft_sizetab(char **tab);
-void						ft_tabfree(char ***tab);
-size_t						ft_intlen(int nb);
+void					ft_tabfree(char ***tab);
+size_t					ft_intlen(int nb);
 
 #endif

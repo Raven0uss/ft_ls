@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 16:01:29 by sbelazou          #+#    #+#             */
-/*   Updated: 2016/11/10 15:19:26 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:53:03 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 size_t		ft_intlen(int nb)
 {
-  char		*str;
-  size_t	i;
+	char	*str;
+	size_t	i;
 
-  i = 0;
-  str = ft_itoa(nb);
-  i = ft_strlen(str);
-  free(str);
-  return (i);
+	i = 0;
+	str = ft_itoa(nb);
+	i = ft_strlen(str);
+	free(str);
+	return (i);
 }

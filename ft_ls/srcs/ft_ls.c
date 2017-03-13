@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 12:35:27 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 18:27:59 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:29:07 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ void				aff_ls(t_data *ls, char **tab, int i, char *rep)
 		ft_aff_tab(tab, "\n");
 }
 
-static void			ft_opt(t_data *ls, char **tab)
+static void			ft_opt(t_data *ls, char **tab, int i)
 {
-	int				i;
-
-	i = 0;
 	if (!(ls->reps[0]) && !(ft_strchr(ls->args, 'R')))
 	{
 		if (!(tab = malloc(sizeof(char *) * 42424)))
@@ -61,21 +58,19 @@ static void			ft_opt(t_data *ls, char **tab)
 			ls->reps[1] = 0;
 		}
 		ft_optreps(ls, tab, 0);
-}
+	}
 }
 
-void				ft_ls(t_data *ls)
+void				ft_ls(t_data *ls, int i)
 {
 	DIR				*dir;
 	struct dirent	*ent;
 	char			**tab;
-	int				i;
 
-	i = 0;
 	tab = NULL;
 	if (ls == NULL)
 	{
-		if (!(tab = malloc(sizeof(char *) * 42424)))//Allocation non precise
+		if (!(tab = malloc(sizeof(char *) * 42424)))
 			return ;
 		if (!(dir = opendir(".")))
 			perror("ft_ls: ");
@@ -89,7 +84,7 @@ void				ft_ls(t_data *ls)
 		return ;
 	}
 	else
-		ft_opt(ls, tab);
+		ft_opt(ls, tab, 0);
 	ft_strdel(&(ls->args));
 	free(ls->reps);
 }

@@ -6,60 +6,56 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:19:26 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/12 15:28:32 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 18:39:14 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-static t_lsize	*init_size(t_lsize *ttx)
+static t_lsize		*init_size(t_lsize *ttx)
 {
-  if (!(ttx = malloc(sizeof(t_lsize))))
-    return (NULL);
-  ttx->ttl = 0;
-  ttx->sze = 0;
-  ttx->grp = 0;
-  ttx->usr = 0;
-  ttx->lnk = 0;
-  ttx->low = 0;
-  ttx->upr = 0;
-  return (ttx);
+	if (!(ttx = malloc(sizeof(t_lsize))))
+		return (NULL);
+	ttx->ttl = 0;
+	ttx->sze = 0;
+	ttx->grp = 0;
+	ttx->usr = 0;
+	ttx->lnk = 0;
+	ttx->low = 0;
+	ttx->upr = 0;
+	return (ttx);
 }
 
-static t_lsize	*fill_size(t_lsize *ttx, struct stat s)
+static t_lsize		*padding(t_lsize *ttx, struct stat s)
 {
-  ttx->sze = ((int)ft_intlen(s.st_size) > ttx->sze ?
-	      (int)ft_intlen(s.st_size) : ttx->sze);
-  ttx->lnk = ((int)ft_intlen(s.st_nlink) > ttx->lnk ?
-	      (int)ft_intlen(s.st_st_nlink) : ttx->lnk);
-  return (ttx);
+	ttx->sze = ((int)ft_intlen(s.st_size) > ttx->sze ?
+				(int)ft_intlen(s.st_size) : ttx->sze);
+	ttx->lnk = ((int)ft_intlen(s.st_nlink) > ttx->lnk ?
+				(int)ft_intlen(s.st_nlink) : ttx->lnk);
+	ttx->upr = ((int)ft_intlen(UP(s.st_rdev)) > ttx->upr ?
+				(int)ft_intlen(UP(s.st_rdev)) : ttx->upr);
+	ttx->low = ((int)ft_intlen(LOW(s.st_rdev)) > ttx->low ?
+				(int)ft_intlen(LOW(s.st_rdev)) : ttx->low);
+	ttx->ttl += s.st_blocks;
+	return (ttx);
 }
 
-static int	calc_total(char **tab, char *rep, t_lsize ttx, t_data *ls)
+static t_lsize		*calc_total(char **tab, char *rep, t_data *ls)
 {
-  unsigned int	i;
-  char		*way;
-  int		total;
-  
-  i = 0;
-  while (tab[i])
-    {
-      way = path(rep, tab[i]);
-      stat(way, &(ls->s));
-      free(way);
-      ttx = fill_size(ttx, ls->s);
-    }
-  return (total);
+	unsigned int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		ls = ft_stat(rep, tab[i++], ls);
+		ls->ttx = padding(ls->ttx, ls->s);
+	}
+	return (ls->ttx);
 }
 
-int		get_total(char **tab, char *rep, t_data *ls)
+t_data				*get_ttx(char **tab, char *rep, t_data *ls)
 {
-  t_lsize	*ttx;
-  int		total;
-
-  total = 0;
-  ttx = init_size(ttx);
-  total = calc_total(tab, rep, ttx, ls);
-  free(ttx);
-  return (total);
+	ls->ttx = init_size(ls->ttx);
+	ls->ttx = calc_total(tab, rep, ls);
+	return (ls);
 }
