@@ -83,14 +83,17 @@ static void			aff_stat(t_data *ls)
 char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep)
 {
 	int				i;
-
+	char				*way;
+	
 	i = 0;
 	ft_putstr("total ");
 	ft_putnbr(0);
 	ft_putchar('\n');//Calculer le total + checker le padding
 	while (tab[i])
 	{
-		stat(path(rep, tab[i]), &(ls->s));
+		way = path(rep, tab[i]);
+		stat(way, &(ls->s));
+		free(way);
 		aff_stat(ls);
 		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
 			&& (ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i])))

@@ -81,6 +81,7 @@ int				main(int ac, char **av)
 {
 	t_data		*ls;
 
+	
 	if (!(ls = malloc(sizeof(t_data))))
 		return (-1);
 	if (ac > 1)
@@ -91,6 +92,11 @@ int				main(int ac, char **av)
 	else
 		ls = NULL;
 	ft_ls(ls);
+	if (ls != NULL)
+	  {
+	    ft_tabfree(&(ls->recs));
+	    free(ls->args);
+	  }
 	free(ls);
 	return (0);
 }

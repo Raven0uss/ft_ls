@@ -73,12 +73,15 @@ static char	**add_to_reps(t_data *ls, int pos)
 static char 	**ft_aff_tab_rec(char **tab, char *sep, char *rep, t_data *ls)
 {
 	int			i;
-
+	char			*way;
+	
 	i = 0;
 	while (tab[i])
 	{
 		ft_putstr(tab[i]);
-		stat(path(rep, tab[i]), &(ls->s));
+		way = path(rep, tab[i]);
+		stat(way, &(ls->s));
+		free(way);
 		if (ft_strchr(ls->args, 'R') && S_ISDIR(ls->s.st_mode)
 			&& ((ft_strcmp(".", tab[i]) && ft_strcmp("..", tab[i]))))
 			ls->recs = add_repository(tab[i], rep, ls);
@@ -124,11 +127,16 @@ static		char	**loop_optreps(t_data *ls, char **tab, char *repo)
 	else
 	{
 		while ((ls->ent = readdir(ls->dir)))
-			if (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a'))
+			if (ls->ent->d_name && (ls->ent->d_name[0] != '.' || ft_strchr(ls->args, 'a')))
 				tab[i++] = ft_strdup(ls->ent->d_name);
 		tab[i] = 0;
 		if (i != 0)
+		  {
 			ls->recs = aff_ls_rec(ls, tab, i, repo);
+			/*while (i > 0)
+			  if (tab[--i])
+			  free(tab[i]);*/
+		  }
 		closedir(ls->dir);
 	}
 	return (ls->recs);
@@ -153,6 +161,7 @@ static char **remove_first(char **tab)
 	return (tab);
 }
 
+
 void		ft_optreps(t_data *ls, char **tab, int j)
 {
 	if (ls->reps[j])
@@ -160,9 +169,9 @@ void		ft_optreps(t_data *ls, char **tab, int j)
 		if (!(tab = malloc(sizeof(char *) * 42424)))
 			return ;
 		ls->recs = loop_optreps(ls, tab, ls->reps[j]);
-		free(tab);
 		if (ls->recs[0] != NULL)
 			ls->reps = add_to_reps(ls, j + 1);
+		free(tab);
 		if (ls->reps[j + 1])
 		{
 			ft_putchar('\n');

@@ -18,11 +18,13 @@ char		*path(char *dir, char *str)
 
 	if (dir == NULL)
 		return (str);
+	if (!(result = malloc(sizeof(char) *
+			      (ft_strlen(dir) + ft_strlen(str) + 3))))
+	    return (NULL);
+	ft_strcpy(result, dir);
 	if (str[0] != '/' && dir[ft_strlen(dir) - 1] != '/')
-		result = ft_strjoin(dir, "/");
-	else
-		result = ft_strdup(dir);
-	result = ft_strjoin(result, str);
+		ft_strcat(result, "/");
+	ft_strcat(result, str);
 	return (result);
 }
 
@@ -31,22 +33,30 @@ char		**sortime(char **tab, t_data *ls, int size, char *rep)
 	int		i;
 	char	*tmp;
 	int		timod;
+	char		*way;
 
+	
 	i = 0;
 	timod = 0;
 	tab = ft_sort_tab(tab, size);
-	stat(path(rep, tab[i]), &(ls->s));
+	way = path(rep, tab[i]);
+	stat(way, &(ls->s));
+	free(way);
 	while (i < size)
 	{
 		timod = ls->s.st_mtime;
-		stat(path(rep, tab[i + 1]), &(ls->s));
+		way = path(rep, tab[i + 1]);
+		stat(way, &(ls->s));
+		free(way);
 		if (timod < ls->s.st_mtime)
 		{
 			tmp = tab[i];
 			tab[i] = tab[i + 1];
 			tab[i + 1] = tmp;
 			i = 0;
-			stat(path(rep, tab[i]), &(ls->s));
+			way = path(rep, tab[i]);
+			stat(way, &(ls->s));
+			free(way);
 		}
 		else
 			i++;
@@ -59,15 +69,20 @@ char		**revtime(char **tab, t_data *ls, int size, char *rep)
 	int		i;
 	char	*tmp;
 	int		timod;
-
+	char		*way;
+	
 	i = 0;
 	timod = 0;
 	tab = ft_rev_tab(tab, size);
-	stat(path(rep, tab[i]), &(ls->s));
+	way = path(rep, tab[i]);
+	stat(way, &(ls->s));
+	free(way);
 	while (i < size)
 	{
 		timod = ls->s.st_mtime;
-		stat(path(rep, tab[i + 1]), &(ls->s));
+		way = path(rep, tab[i + 1]);
+		stat(way, &(ls->s));
+		free(way);
 		if (timod > ls->s.st_mtime)
 		{
 			tmp = tab[i];
