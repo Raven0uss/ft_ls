@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/07 15:26:51 by sbelazou          #+#    #+#             */
-/*   Updated: 2016/11/09 19:33:55 by sbelazou         ###   ########.fr       */
+/*   Created: 2016/11/05 16:01:29 by sbelazou          #+#    #+#             */
+/*   Updated: 2016/11/10 15:19:26 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char				*ft_strjoin(char const *s1, char const *s2)
+size_t		ft_intlen(int nb)
 {
-	char			*new;
-	unsigned int	size;
+  char		*str;
+  size_t	i;
 
-	if (s1 && s2)
-	{
-		size = ft_strlen(s1) + ft_strlen(s2) + 1;
-		if ((new = malloc(sizeof(char) * size)) == NULL)
-			return (NULL);
-		new = ft_strcpy(new, s1);
-		new = ft_strcat(new, s2);
-		new[size] = 0;
-		return (new);
-	}
-	return (NULL);
+  i = 0;
+  str = ft_itoa(nb);
+  i = ft_strlen(str);
+  free(str);
+  return (i);
 }

@@ -24,6 +24,17 @@
 # include <grp.h>
 # include <pwd.h>
 
+typedef struct		s_lsize
+{
+  unsigned int		ttl;
+  unsigned int		sze;
+  unsigned int		grp;
+  unsigned int		usr;
+  unsigned int		lnk;
+  unsigned int		low;
+  unsigned int		upr;
+}			t_lsize;
+
 typedef struct		s_data
 {
 	DIR				*dir;
@@ -44,6 +55,7 @@ char				*path(char *dir, char *str);
 char				**organize(char **tab, t_data *ls, int i, char *rep);
 char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep);
 char				**add_repository(char *to_add, char *dir, t_data *ls);
+int				get_total(char **tab, char *rep, char *way, ls);
 
 #endif
 

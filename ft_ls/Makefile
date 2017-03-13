@@ -14,7 +14,7 @@ NAME		=	ft_ls
 DIRSRC		=	./srcs/
 DIROBJ		=	./objs/
 INC_LIB		=	./includes/libft/libft.a
-SRC			=	main.c ft_ls.c sort_result.c lsl_ft.c recurs.c
+SRC			=	main.c ft_ls.c sort_result.c lsl_ft.c recurs.c lsl_size.c
 
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(OBJ:%=$(DIROBJ)%)

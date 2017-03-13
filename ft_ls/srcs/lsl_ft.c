@@ -73,9 +73,9 @@ static void			aff_stat(t_data *ls)
 	ft_putnbr(ls->s.st_nlink);
 	ft_putstr(" ");
 	affgiduid(ls->s.st_uid, ls->s.st_gid);
-	ft_putstr("  ");
+	ft_putstr("  ");//PADDING HERE
 	ft_putnbr(ls->s.st_size);
-	ft_putstr("  ");
+	ft_putstr("  "); 
 	data_padd(ctime(&(ls->s.st_mtime)));
 	ft_putstr(" ");
 }
@@ -87,7 +87,7 @@ char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep)
 	
 	i = 0;
 	ft_putstr("total ");
-	ft_putnbr(0);
+	ft_putnbr(get_total(tab, rep, way, ls));
 	ft_putchar('\n');//Calculer le total + checker le padding
 	while (tab[i])
 	{
@@ -106,13 +106,18 @@ char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep)
 void				aff_ls_list(char **tab, t_data *ls, char *rep)
 {
 	int				i;
-
+	char				*way;
+	
 	i = 0;
-	ft_putendl("total ");
+	ft_putstr("total ");
+	ft_putnbr(get_total(tab, rep, way, ls));
+	ft_putchar('\n');
 	//Calculer le total + checker le padding
 	while (tab[i])
 	{
-		stat(path(rep, tab[i]), &(ls->s));
+		way = path(rep, tab[i]);
+		stat(way, &(ls->s));
+		free(way);
 		aff_stat(ls);
 		ft_putendl(tab[i++]);
 	}
