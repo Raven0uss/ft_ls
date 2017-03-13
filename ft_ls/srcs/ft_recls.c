@@ -6,15 +6,15 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:42:28 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:35:11 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:16:57 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-char				**add_repository(char *to_add, char *dir, t_data *ls)
+char		**add_repository(char *to_add, char *dir, t_data *ls)
 {
-	unsigned int	i;
+	int		i;
 
 	i = 0;
 	while (ls->recs[i])
@@ -24,9 +24,9 @@ char				**add_repository(char *to_add, char *dir, t_data *ls)
 	return (ls->recs);
 }
 
-static char			**ft_disprtab(char **tab, char *sep, char *rep, t_data *ls)
+static char	**ft_disprtab(char **tab, char *sep, char *rep, t_data *ls)
 {
-	unsigned int	i;
+	int		i;
 
 	i = 0;
 	while (tab[i])
@@ -44,7 +44,7 @@ static char			**ft_disprtab(char **tab, char *sep, char *rep, t_data *ls)
 	return (ls->recs);
 }
 
-char				**aff_ls_rec(t_data *ls, char **tab, int i, char *rep)
+char		**aff_ls_rec(t_data *ls, char **tab, int i, char *rep)
 {
 	if (ft_strchr(ls->args, 't'))
 	{

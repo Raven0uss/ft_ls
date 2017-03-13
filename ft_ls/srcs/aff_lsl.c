@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:30:16 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:32:23 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:07:13 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ static void			aff_perm(mode_t m)
 
 static void			data_padd(char *d)
 {
-	char	str[25];
-	int		i;
-	int		j;
+	char			str[25];
+	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
 	j = 4;

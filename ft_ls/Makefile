@@ -6,7 +6,7 @@
 #    By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 20:16:27 by sbelazou          #+#    #+#              #
-#    Updated: 2017/03/13 18:08:18 by sbelazou         ###   ########.fr        #
+#    Updated: 2017/03/13 19:05:18 by sbelazou         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,7 +19,7 @@ SRC			=	main.c ft_ls.c sort_result.c lsl_ft.c recurs.c lsl_size.c\
 
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(OBJ:%=$(DIROBJ)%)
-FLAGS		=
+FLAGS		=	yes
 
 ifdef FLAGS
 	ifeq ($(FLAGS), yes)

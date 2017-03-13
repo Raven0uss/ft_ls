@@ -6,13 +6,13 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 12:35:27 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:29:07 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:07:59 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-void				aff_ls(t_data *ls, char **tab, int i, char *rep)
+void				aff_ls(t_data *ls, char **tab, unsigned int i, char *rep)
 {
 	if (ft_strchr(ls->args, 't'))
 	{
@@ -34,7 +34,7 @@ void				aff_ls(t_data *ls, char **tab, int i, char *rep)
 		ft_aff_tab(tab, "\n");
 }
 
-static void			ft_opt(t_data *ls, char **tab, int i)
+static void			ft_opt(t_data *ls, char **tab, unsigned int i)
 {
 	if (!(ls->reps[0]) && !(ft_strchr(ls->args, 'R')))
 	{
@@ -61,7 +61,7 @@ static void			ft_opt(t_data *ls, char **tab, int i)
 	}
 }
 
-void				ft_ls(t_data *ls, int i)
+void				ft_ls(t_data *ls, unsigned int i)
 {
 	DIR				*dir;
 	struct dirent	*ent;

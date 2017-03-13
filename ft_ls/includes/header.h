@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:40:48 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:15:27 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ typedef struct		s_data
 	t_lsize			*ttx;
 }					t_data;
 
-void				ft_ls(t_data *ls, int i);
+void				ft_ls(t_data *ls, unsigned int i);
 char				**sortime(char **tab, t_data *ls, int size, char *rep);
 char				**revtime(char **tab, t_data *ls, int size, char *rep);
 void				aff_ls_list(char **tab, t_data *ls, char *rep);
-void				ft_optreps(t_data *ls, char **tab, int j);
-void				aff_ls(t_data *ls, char **tab, int i, char *rep);
+void				ft_optreps(t_data *ls, char **tab, unsigned int j);
+void				aff_ls(t_data *ls, char **tab, unsigned int i, char *rep);
 char				*path(char *dir, char *str);
 char				**organize(char **tab, t_data *ls, int i, char *rep);
 char				**aff_ls_rec(t_data *ls, char **tab, int i, char *rep);

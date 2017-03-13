@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:19:26 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:39:14 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:18:30 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static t_lsize		*init_size(t_lsize *ttx)
 
 static t_lsize		*padding(t_lsize *ttx, struct stat s)
 {
-	ttx->sze = ((int)ft_intlen(s.st_size) > ttx->sze ?
+	ttx->sze = ((int)ft_intlen(s.st_size) > (int)ttx->sze ?
 				(int)ft_intlen(s.st_size) : ttx->sze);
-	ttx->lnk = ((int)ft_intlen(s.st_nlink) > ttx->lnk ?
+	ttx->lnk = ((int)ft_intlen(s.st_nlink) > (int)ttx->lnk ?
 				(int)ft_intlen(s.st_nlink) : ttx->lnk);
-	ttx->upr = ((int)ft_intlen(UP(s.st_rdev)) > ttx->upr ?
+	ttx->upr = ((int)ft_intlen(UP(s.st_rdev)) > (int)ttx->upr ?
 				(int)ft_intlen(UP(s.st_rdev)) : ttx->upr);
-	ttx->low = ((int)ft_intlen(LOW(s.st_rdev)) > ttx->low ?
+	ttx->low = ((int)ft_intlen(LOW(s.st_rdev)) > (int)ttx->low ?
 				(int)ft_intlen(LOW(s.st_rdev)) : ttx->low);
 	ttx->ttl += s.st_blocks;
 	return (ttx);

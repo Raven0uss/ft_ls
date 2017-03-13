@@ -6,13 +6,13 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:20:02 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:06:19 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-static char			**encrust_rec(t_data *ls, int pos)
+static char			**encrust_rec(t_data *ls, unsigned int pos)
 {
 	unsigned int	size;
 	unsigned int	i;
@@ -38,7 +38,7 @@ static char			**encrust_rec(t_data *ls, int pos)
 	return (ls->reps);
 }
 
-static char			**add_to_reps(t_data *ls, int pos)
+static char			**add_to_reps(t_data *ls, unsigned int pos)
 {
 	unsigned int	i;
 
@@ -82,7 +82,7 @@ static	char		**loop_optreps(t_data *ls, char **tab, char *repo)
 
 static char			**remove_first(char **tab)
 {
-	int				i;
+	unsigned int	i;
 
 	i = 0;
 	while (tab[i])
@@ -99,7 +99,7 @@ static char			**remove_first(char **tab)
 	return (tab);
 }
 
-void				ft_optreps(t_data *ls, char **tab, int j)
+void				ft_optreps(t_data *ls, char **tab, unsigned int j)
 {
 	if (ls->reps[j])
 	{
