@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:19:26 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 19:18:30 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/17 19:07:13 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ static t_lsize		*padding(t_lsize *ttx, struct stat s)
 				(int)ft_intlen(UP(s.st_rdev)) : ttx->upr);
 	ttx->low = ((int)ft_intlen(LOW(s.st_rdev)) > (int)ttx->low ?
 				(int)ft_intlen(LOW(s.st_rdev)) : ttx->low);
+	if (getpwuid(s.st_uid))
+		ttx->usr = ((int)ft_strlen(getpwuid(s.st_uid)->pw_name)) > (int)ttx->usr ?
+			((int)ft_strlen(getpwuid(s.st_uid)->pw_name)) : (int)ttx->usr;
+	else
+		ttx->usr = 1;
+	if (getgrgid(s.st_gid))
+		ttx->grp = ((int)ft_strlen(getgrgid(s.st_gid)->gr_name)) > (int)ttx->grp ?
+			((int)ft_strlen(getgrgid(s.st_gid)->gr_name)) : (int)ttx->grp;
+	else
+		ttx->grp = 1;
 	ttx->ttl += s.st_blocks;
 	return (ttx);
 }
