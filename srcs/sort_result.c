@@ -33,9 +33,9 @@ t_data		*ft_stat(char *rep, char *str, t_data *ls)
 	char	*way;
 
 	way = path(rep, str);
+	stat(way, &(ls->s));
 	if (S_ISLNK(ls->s.st_mode))
 	  lstat(way, &(ls->s));
-	stat(way, &(ls->s));
 	free(way);
 	return (ls);
 }
