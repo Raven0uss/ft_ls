@@ -29,13 +29,13 @@ static t_lsize		*init_size(t_lsize *ttx)
 static t_lsize		*padding(t_lsize *ttx, struct stat s)
 {
 	ttx->sze = ((int)ft_intlen(s.st_size) > (int)ttx->sze ?
-				(int)ft_intlen(s.st_size) : ttx->sze);
+		    (int)ft_intlen(s.st_size) : (int)ttx->sze);
 	ttx->lnk = ((int)ft_intlen(s.st_nlink) > (int)ttx->lnk ?
-				(int)ft_intlen(s.st_nlink) : ttx->lnk);
+		    (int)ft_intlen(s.st_nlink) : (int)ttx->lnk);
 	ttx->upr = ((int)ft_intlen(UP(s.st_rdev)) > (int)ttx->upr ?
-				(int)ft_intlen(UP(s.st_rdev)) : ttx->upr);
+		    (int)ft_intlen(UP(s.st_rdev)) : (int)ttx->upr);
 	ttx->low = ((int)ft_intlen(LOW(s.st_rdev)) > (int)ttx->low ?
-				(int)ft_intlen(LOW(s.st_rdev)) : ttx->low);
+		    (int)ft_intlen(LOW(s.st_rdev)) : (int)ttx->low);
 	if (getpwuid(s.st_uid))
 		ttx->usr = ((int)ft_strlen(getpwuid(s.st_uid)->pw_name))
 			> (int)ttx->usr ?

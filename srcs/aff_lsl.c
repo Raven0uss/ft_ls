@@ -18,7 +18,8 @@ static void					write_space(int max, int nb, char *str)
 	{
 		if (nb != 0)
 			nb = (int)ft_intlen(nb);
-		ft_putchar(' ');
+		if (nb != 0)
+		  ft_putchar(' ');
 		while (nb != max)
 		{
 			ft_putchar(' ');
@@ -52,10 +53,10 @@ static void					affgiduid(uid_t uid, gid_t gid, t_data *ls)
 
 static void			aff_perm(mode_t m)
 {
-	if (S_ISDIR(m))
-		ft_putchar('d');
-	else if (S_ISLNK(m))
+	if (S_ISLNK(m))
 		ft_putchar('l');
+	else if (S_ISDIR(m))
+		ft_putchar('d');
 	else if (S_ISBLK(m))
 		ft_putchar('b');
 	else if (S_ISFIFO(m))
@@ -101,7 +102,7 @@ void				aff_stat(t_data *ls)
 	affgiduid(ls->s.st_uid, ls->s.st_gid, ls);
 	write_space(ls->ttx->sze, ls->s.st_size, NULL);
 	ft_putnbr(ls->s.st_size);
-	write_space(0, 0, NULL);
+	write_space(1, 0, NULL);
 	data_padd(ctime(&(ls->s.st_mtime)));
-	write_space(0, 0, NULL);
+	write_space(1, 0, NULL);
 }
