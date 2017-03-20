@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:30:16 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/17 22:06:22 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/20 19:09:27 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,26 @@ static void			data_padd(char *d)
 
 void				aff_stat(t_data *ls)
 {
+	ls->ttx->sze = ls->ttx->upr + ls->ttx->low + 4 > ls->ttx->sze ?
+		ls->ttx->upr + ls->ttx->low + 4: ls->ttx->sze;
 	aff_perm(ls->s.st_mode);
 	write_space(ls->ttx->lnk, ls->s.st_nlink, NULL);
 	ft_putnbr(ls->s.st_nlink);
 	ft_putchar(' ');
 	affgiduid(ls->s.st_uid, ls->s.st_gid, ls);
-	write_space(ls->ttx->sze, ls->s.st_size, NULL);
-	ft_putnbr(ls->s.st_size);
+	if (S_ISCHR(ls->s.st_mode) || S_ISBLK(ls->s.st_mode))
+	{
+		write_space(ls->ttx->low + 1, LOW(ls->s.st_rdev), NULL);
+		ft_putnbr(LOW(ls->s.st_rdev));
+		ft_putstr(", ");
+		write_space(ls->ttx->upr, UP(ls->s.st_rdev), NULL);
+		ft_putnbr(UP(ls->s.st_rdev));
+	}
+	else
+	{
+		write_space(ls->ttx->sze, ls->s.st_size, NULL);
+		ft_putnbr(ls->s.st_size);
+	}
 	write_space(1, 0, NULL);
 	data_padd(ctime(&(ls->s.st_mtime)));
 	write_space(1, 0, NULL);

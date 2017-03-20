@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:37:57 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:36:50 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/20 19:02:25 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_data		*ft_stat(char *rep, char *str, t_data *ls)
 
 	way = path(rep, str);
 	stat(way, &(ls->s));
-	if (S_ISLNK(ls->s.st_mode))
-	  lstat(way, &(ls->s));
+	lstat(way, &(ls->s));
 	free(way);
 	return (ls);
 }
@@ -54,7 +53,8 @@ char		**sortime(char **tab, t_data *ls, int size, char *rep)
 	{
 		timod = ls->s.st_mtime;
 		ls = ft_stat(rep, tab[i + 1], ls);
-		if (timod < ls->s.st_mtime)
+		if (timod < ls->s.st_mtime || ((timod == ls->s.st_mtime)
+			&& ft_strcmp(tab[i], tab[i + 1])))
 		{
 			tmp = tab[i];
 			tab[i] = tab[i + 1];
@@ -82,7 +82,8 @@ char		**revtime(char **tab, t_data *ls, int size, char *rep)
 	{
 		timod = ls->s.st_mtime;
 		ls = ft_stat(rep, tab[i + 1], ls);
-		if (timod > ls->s.st_mtime)
+		if (timod > ls->s.st_mtime || ((timod == ls->s.st_mtime)
+			&& ft_strcmp(tab[i], tab[i + 1])))
 		{
 			tmp = tab[i];
 			tab[i] = tab[i + 1];

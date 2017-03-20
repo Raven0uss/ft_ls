@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:42:42 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 18:38:41 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/20 19:47:29 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char				**aff_ls_list_rec(char **tab, t_data *ls, char *rep)
 
 void				aff_ls_list(char **tab, t_data *ls, char *rep)
 {
+	char			lnk[256];
 	int				i;
 
 	i = 0;
@@ -47,7 +48,15 @@ void				aff_ls_list(char **tab, t_data *ls, char *rep)
 	{
 		ls = ft_stat(rep, tab[i], ls);
 		aff_stat(ls);
-		ft_putendl(tab[i++]);
+		ft_putstr(tab[i]);
+		if (S_ISLNK(ls->s.st_mode))
+		{
+			readlink(tab[i], lnk, sizeof(lnk) - 1);
+			ft_putstr(" -> ");
+			ft_putstr(lnk);
+		}
+		i++;
+		ft_putchar('\n');
 	}
 	free(ls->ttx);
 }
