@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 18:36:43 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 19:06:19 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/20 19:55:42 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static	char		**loop_optreps(t_data *ls, char **tab, char *repo)
 	i = 0;
 	ls->recs[0] = NULL;
 	if (!(ls->dir = opendir(repo)))
-		perror(repo);
+		perror(ft_strjoin("ft_ls: ", repo));
 	else
 	{
 		while ((ls->ent = readdir(ls->dir)))
