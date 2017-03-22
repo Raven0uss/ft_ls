@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 20:16:53 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/13 19:15:27 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/22 16:36:57 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <grp.h>
 # include <pwd.h>
 
-# define LOW(x) ((int32_t)(((u_int32_t)(x) >> 24) & 0xff))
-# define UP(x) ((int32_t)((x) & 0xffffff))
+# define SUBDEV(x) ((int32_t)(((u_int32_t)(x) >> 24) & 0xff))
+# define DEVICE(x) ((int32_t)((x) & 0xffffff))
 
 typedef struct		s_lsize
 {
@@ -34,8 +34,8 @@ typedef struct		s_lsize
 	unsigned int	grp;
 	unsigned int	usr;
 	unsigned int	lnk;
-	unsigned int	low;
-	unsigned int	upr;
+	unsigned int	sbd;
+	unsigned int	dvc;
 }					t_lsize;
 
 typedef struct		s_data

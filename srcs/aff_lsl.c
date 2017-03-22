@@ -6,7 +6,7 @@
 /*   By: sbelazou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 17:30:16 by sbelazou          #+#    #+#             */
-/*   Updated: 2017/03/22 16:28:34 by sbelazou         ###   ########.fr       */
+/*   Updated: 2017/03/22 16:37:29 by sbelazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ static void					data_padd(char *d)
 
 void						aff_stat(t_data *ls)
 {
-	ls->ttx->sze = ls->ttx->upr + ls->ttx->low + 3 > ls->ttx->sze ?
-		ls->ttx->upr + ls->ttx->low + 3 : ls->ttx->sze;
+	ls->ttx->sze = ls->ttx->dvc + ls->ttx->sbd + 3 > ls->ttx->sze ?
+		ls->ttx->dvc + ls->ttx->sbd + 3 : ls->ttx->sze;
 	aff_perm(ls->s.st_mode);
 	ft_putchar(' ');
 	write_space(ls->ttx->lnk, ls->s.st_nlink, NULL);
@@ -105,11 +105,11 @@ void						aff_stat(t_data *ls)
 	affgiduid(ls->s.st_uid, ls->s.st_gid, ls);
 	if (S_ISCHR(ls->s.st_mode) || S_ISBLK(ls->s.st_mode))
 	{
-		write_space(ls->ttx->low + 1, LOW(ls->s.st_rdev), NULL);
-		ft_putnbr(LOW(ls->s.st_rdev));
+		write_space(ls->ttx->sbd + 1, SUBDEV(ls->s.st_rdev), NULL);
+		ft_putnbr(SUBDEV(ls->s.st_rdev));
 		ft_putchar(',');
-		write_space(ls->ttx->upr, UP(ls->s.st_rdev), NULL);
-		ft_putnbr(UP(ls->s.st_rdev));
+		write_space(ls->ttx->dvc, DEVICE(ls->s.st_rdev), NULL);
+		ft_putnbr(DEVICE(ls->s.st_rdev));
 	}
 	else
 	{
